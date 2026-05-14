@@ -1,0 +1,2461 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css">
+<script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+<style>
+  .pnlm-container {
+    border-radius: 12px;
+  }
+  .panorama-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 20;
+    background: var(--blue);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    transition: all 0.2s;
+  }
+  .panorama-btn:hover {
+    background: var(--blue-h);
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Аудитория.УрФУ</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+:root{
+  --blue:#1565C0;--blue-h:#0D47A1;--blue-bg:#E3F2FD;
+  --teal:#00ACC1;--teal-bg:#E0F7FA;
+  --red:#E53935;--red-bg:#FFEBEE;
+  --green:#2E7D32;--green-bg:#E8F5E9;
+  --orange:#EF6C00;--orange-bg:#FFF3E0;
+  --bg:#F0F2F5;--white:#fff;--border:#E0E0E0;
+  --text:#1A1A2E;--text2:#6B7280;
+  --sw:220px;--hh:56px;--r:12px;
+  --sh:0 1px 4px rgba(0,0,0,.08);--shm:0 4px 20px rgba(0,0,0,.13);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5}
+[hidden]{display:none!important}
+
+/* ─ HEADER ─ */
+.hdr{position:fixed;top:0;left:0;right:0;height:var(--hh);background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 24px;z-index:200;box-shadow:var(--sh)}
+.logo{color:var(--blue);font-weight:700;font-size:16px;cursor:pointer;text-decoration:none}
+.user-chip{display:flex;align-items:center;gap:8px;padding:5px 12px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:500;position:relative;transition:background .15s}
+.user-chip:hover{background:var(--bg)}
+.ava{width:30px;height:30px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+
+/* ─ SIDEBAR ─ */
+.sb{position:fixed;top:var(--hh);left:0;bottom:0;width:var(--sw);background:var(--white);border-right:1px solid var(--border);padding:14px 10px;overflow-y:auto;z-index:100}
+.ng{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text2);padding:8px 10px 4px;margin-top:4px}
+.ni{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:500;color:var(--text2);border:none;background:none;width:100%;text-align:left;transition:all .15s;margin-bottom:1px}
+.ni:hover{background:var(--bg);color:var(--text)}
+.ni.on{background:var(--blue-bg);color:var(--blue)}
+.ni svg{width:17px;height:17px;flex-shrink:0}
+.nbadge{background:var(--red);color:#fff;border-radius:10px;font-size:10px;font-weight:700;padding:1px 6px;margin-left:auto;min-width:18px;text-align:center}
+
+/* ─ MAIN ─ */
+.main{margin-left:var(--sw);padding-top:var(--hh);min-height:100vh}
+.page{display:none;padding:28px}
+.page.on{display:block}
+.ptitle{font-size:22px;font-weight:700;margin-bottom:24px;text-align:center}
+
+/* ─ CARDS ─ */
+.card{background:var(--white);border-radius:var(--r);border:1px solid var(--border);box-shadow:var(--sh);padding:20px;margin-bottom:18px}
+.ctitle{font-size:14px;font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+
+/* ─ BUTTONS ─ */
+.btn{height:36px;padding:0 16px;border-radius:8px;border:none;cursor:pointer;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;display:inline-flex;align-items:center;gap:6px;transition:all .15s;white-space:nowrap}
+.bp{background:var(--blue);color:#fff}.bp:hover{background:var(--blue-h)}
+.bs{background:var(--bg);color:var(--text);border:1px solid var(--border)}.bs:hover{background:var(--border)}
+.bd{background:var(--red-bg);color:var(--red);border:1px solid #FFCDD2}.bd:hover{background:#FFCDD2}
+.bg{background:var(--green-bg);color:var(--green);border:1px solid #C8E6C9}.bg:hover{background:#C8E6C9}
+.bt{background:var(--teal-bg);color:var(--teal);border:1px solid #B2EBF2}.bt:hover{background:#B2EBF2}
+.bsm{height:28px;padding:0 10px;font-size:12px;border-radius:6px}
+.bic{width:30px;height:30px;padding:0;border-radius:8px;justify-content:center;flex-shrink:0}
+.bfull{width:100%;justify-content:center}
+
+/* ─ FORMS ─ */
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;margin-bottom:12px}
+.fg{display:flex;flex-direction:column;gap:4px}
+.fg label{font-size:11px;font-weight:500;color:var(--text2)}
+input,select,textarea{height:36px;padding:0 12px;border:1px solid var(--border);border-radius:8px;font-family:'Inter',sans-serif;font-size:13px;background:var(--white);color:var(--text);outline:none;transition:border .15s}
+input:focus,select:focus,textarea:focus{border-color:var(--blue)}
+input[disabled]{background:var(--bg);color:var(--text2)}
+textarea{height:auto;padding:8px 12px;resize:vertical}
+input[type=file]{height:36px;padding:5px 10px;border:1px dashed var(--border);cursor:pointer}
+.fl{width:100%}
+hr{border:none;border-top:1px solid var(--border);margin:14px 0}
+.sub{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--text2);margin:12px 0 8px}
+
+/* ─ TABLE ─ */
+.tw{overflow-x:auto;border-radius:var(--r);border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse}
+th{background:var(--bg);text-align:left;padding:9px 14px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border)}
+td{padding:11px 14px;border-bottom:1px solid var(--border);font-size:13px;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:#FAFAFA}
+
+/* ─ STATUS ─ */
+.st{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600}
+.st-new{background:#E3F2FD;color:#1565C0}
+.st-assigned{background:var(--teal-bg);color:var(--teal)}
+.st-in_progress{background:var(--orange-bg);color:var(--orange)}
+.st-closed{background:var(--green-bg);color:var(--green)}
+
+/* ─ MODAL ─ */
+.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:300;align-items:center;justify-content:center}
+.ov.open{display:flex}
+.modal{background:#fff;border-radius:var(--r);padding:26px;width:90%;max-width:680px;max-height:90vh;overflow-y:auto;box-shadow:var(--shm)}
+.mhdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.mtitle{font-size:16px;font-weight:700}
+.mx{background:none;border:none;font-size:22px;cursor:pointer;color:var(--text2);line-height:1;padding:0}
+
+/* ─ LOGIN ─ */
+.lw{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--bg)}
+.lcard{background:#fff;border-radius:20px;padding:40px;width:400px;box-shadow:0 8px 40px rgba(0,0,0,.1)}
+.ltitle{color:var(--blue);font-size:22px;font-weight:700;text-align:center;margin-bottom:28px}
+.linp{width:100%;height:48px;padding:0 18px;border:1px solid var(--border);border-radius:30px;font-size:14px;outline:none;margin-bottom:12px;font-family:'Inter',sans-serif;box-sizing:border-box}
+.linp:focus{border-color:var(--blue)}
+.lbtn{width:100%;height:48px;border-radius:30px;border:none;cursor:pointer;font-size:14px;font-weight:600;font-family:'Inter',sans-serif;transition:all .15s;margin-bottom:12px;display:flex;align-items:center;justify-content:center}
+.lbo{background:#fff;border:1px solid var(--border);color:var(--text)}.lbo:hover{background:var(--bg)}
+.lbp{background:var(--blue);color:#fff}.lbp:hover{background:var(--blue-h)}
+.ldiv{display:flex;align-items:center;gap:12px;margin:14px 0;color:var(--text2);font-size:13px}
+.ldiv::before,.ldiv::after{content:'';flex:1;height:1px;background:var(--border)}
+.lact{display:flex;justify-content:flex-end;margin-bottom:10px}
+
+/* ─ BUILDINGS GRID ─ */
+.bgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:16px;margin-top:4px}
+.bcard{background:#fff;border-radius:var(--r);border:1px solid var(--border);overflow:hidden;cursor:pointer;transition:box-shadow .15s;position:relative}
+.bcard:hover{box-shadow:var(--shm)}
+.bimg{width:100%;height:130px;object-fit:cover;display:block}
+.bph{width:100%;height:130px;background:linear-gradient(135deg,#E3F2FD,#BBDEFB);display:flex;align-items:center;justify-content:center}
+.bname{padding:10px 12px;font-size:13px;font-weight:500;text-align:center;line-height:1.3}
+.bmenu{position:absolute;top:8px;right:8px;width:26px;height:26px;border-radius:50%;background:rgba(0,0,0,.45);color:#fff;border:none;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;line-height:1}
+.badd{background:var(--blue);color:#fff;border:none;border-radius:8px;padding:0 16px;cursor:pointer;font-size:13px;font-weight:500;font-family:'Inter',sans-serif;display:inline-flex;align-items:center;gap:6px;margin-bottom:20px;height:36px;transition:background .15s}
+.badd:hover{background:var(--blue-h)}
+
+/* ─ VIEWER ─ */
+.vlayout{display:flex;gap:0;height:calc(100vh - var(--hh) - 100px);min-height:500px}
+.vmap{flex:1;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#F8F9FA;border-radius:var(--r);border:1px solid var(--border)}
+.vmsg{color:var(--text2);font-size:13px;text-align:center;padding:20px}
+#floorImg{max-width:100%;max-height:100%;object-fit:contain;transform-origin:center;transition:transform .2s;user-select:none}
+.vzoom{position:absolute;left:14px;bottom:14px;display:flex;flex-direction:column;gap:4px}
+.vzb{width:34px;height:34px;background:#fff;border:1px solid var(--border);border-radius:8px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;box-shadow:var(--sh);transition:background .15s}
+.vzb:hover{background:var(--bg)}
+
+/* ─ ROOM PANEL ─ */
+.rpanel{width:360px;background:#fff;border-left:1px solid var(--border);flex-shrink:0;overflow-y:auto;display:flex;flex-direction:column;transition:width .2s}
+.rpanel.hidden-panel{width:0;overflow:hidden;border-left:none}
+.rphdr{padding:16px 18px 0;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.rpnum{font-size:18px;font-weight:700}
+.rphdr-btns{display:flex;gap:6px;align-items:center}
+.rptabs{display:flex;gap:0;padding:0 18px;border-bottom:1px solid var(--border);margin-top:12px;flex-shrink:0}
+.rptab{padding:9px 16px;border:none;background:none;cursor:pointer;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;color:var(--text2);border-bottom:2px solid transparent;transition:all .15s}
+.rptab.on{color:var(--blue);border-bottom-color:var(--blue)}
+.rpbody{padding:16px 18px;flex:1;overflow-y:auto}
+.irow{display:flex;justify-content:space-between;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--border)}
+.irow:last-child{border-bottom:none}
+.ilbl{color:var(--text2);font-size:13px;flex-shrink:0}
+.ival{font-size:13px;font-weight:500;text-align:right;max-width:200px;word-break:break-word}
+.eqtbl{width:100%;border-collapse:collapse;margin-top:8px;border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.eqtbl th{background:var(--bg);padding:7px 12px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);border-bottom:1px solid var(--border);text-align:left}
+.eqtbl td{padding:8px 12px;font-size:13px;border-bottom:1px solid var(--border)}
+.eqtbl tr:last-child td{border-bottom:none}
+.exbtn{background:none;border:none;cursor:pointer;color:var(--blue);font-size:12px;display:flex;align-items:center;gap:3px;font-family:'Inter',sans-serif;margin-top:6px}
+
+/* ─ MEDIA CAROUSEL ─ */
+.mc{position:relative;margin-top:10px}
+.mc-main{width:100%;height:190px;border-radius:8px;overflow:hidden;position:relative;background:var(--bg)}
+.mc-main img{width:100%;height:100%;object-fit:cover;display:block}
+.mc-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.38);color:#fff;border:none;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:background .15s}
+.mc-nav:hover{background:rgba(0,0,0,.6)}
+.mc-l{left:7px}.mc-r{right:7px}
+.mc-thumbs{display:flex;gap:6px;margin-top:7px;overflow-x:auto;padding-bottom:2px}
+.mc-th{width:72px;height:52px;object-fit:cover;border-radius:6px;cursor:pointer;flex-shrink:0;border:2px solid transparent;transition:border .15s}
+.mc-th.on{border-color:var(--blue)}
+
+/* ─ FLOOR PILLS ─ */
+.fpills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;align-items:center}
+.fp{padding:5px 14px;border-radius:20px;border:1px solid var(--border);background:#fff;cursor:pointer;font-size:13px;font-weight:500;color:var(--text2);transition:all .15s}
+.fp.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+.fplbl{font-size:12px;font-weight:500;color:var(--text2)}
+
+/* ─ ROOMS LIST ─ */
+.rlist{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.ritem{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:9px;border:1px solid var(--border);background:#fff;cursor:pointer;transition:all .15s}
+.ritem:hover{border-color:var(--blue);box-shadow:var(--sh)}
+.ritem.on{border-color:var(--blue);background:var(--blue-bg)}
+.rnum{font-weight:600;font-size:14px;min-width:36px}
+.rtype{font-size:12px;color:var(--text2);flex:1}
+.rcap{font-size:12px;color:var(--text2)}
+
+/* ─ TICKET TABLE ─ */
+.tkhdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:12px}
+.tktabs{display:flex;gap:4px;background:var(--bg);padding:4px;border-radius:10px}
+.tktab{padding:7px 24px;border:none;border-radius:7px;cursor:pointer;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;color:var(--text2);background:transparent;transition:all .15s}
+.tktab.on{background:var(--blue);color:#fff}
+.amenu{position:relative;display:inline-block}
+.adrop{display:none;position:absolute;right:0;top:34px;background:#fff;border:1px solid var(--border);border-radius:8px;box-shadow:var(--shm);z-index:50;min-width:155px;padding:4px}
+.adrop.open{display:block}
+.aitem{display:block;width:100%;text-align:left;padding:7px 12px;border:none;background:none;font-size:13px;cursor:pointer;border-radius:6px;font-family:'Inter',sans-serif;transition:background .15s}
+.aitem:hover{background:var(--bg)}
+.aitem.danger{color:var(--red)}
+
+/* ─ EDIT GRID ─ */
+.eg{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.egf{grid-column:1/-1}
+
+/* ─ MEDIA GRID ─ */
+.mg{display:flex;flex-wrap:wrap;gap:9px;margin-top:8px}
+.mi{position:relative;width:96px;height:96px;border-radius:8px;overflow:hidden;border:1px solid var(--border)}
+.mi img{width:100%;height:100%;object-fit:cover}
+.midel{position:absolute;top:3px;right:3px;background:rgba(229,57,53,.9);color:#fff;border:none;border-radius:50%;width:20px;height:20px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;line-height:1}
+.mitag{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.55);color:#fff;font-size:9px;text-align:center;padding:2px}
+
+/* ─ FEATURES ROW ─ */
+.frow{display:grid;grid-template-columns:1fr 1fr 60px 1fr 32px;gap:7px;align-items:center;padding:6px 0;border-bottom:1px solid var(--border)}
+.frow:last-child{border-bottom:none}
+.finp{height:32px;padding:0 8px;border:1px solid var(--border);border-radius:7px;font-size:12px;font-family:'Inter',sans-serif;width:100%}
+
+/* ─ DROP USER ─ */
+.udrop{position:fixed;top:60px;right:16px;background:#fff;border:1px solid var(--border);border-radius:12px;padding:8px;box-shadow:var(--shm);z-index:400;min-width:185px}
+
+/* ─ SCROLLBAR ─ */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-thumb{background:#CBD5E0;border-radius:3px}
+
+/* ─ FILTER PANEL ─ */
+.fpanel{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:14px}
+
+/* ─ ROOM FILTER ─ */
+.rfsection{border-bottom:1px solid var(--border);padding:14px 0}
+.rfsection:last-of-type{border-bottom:none}
+.rfhdr{display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-size:15px;font-weight:600;user-select:none}
+.rfhdr:hover{color:var(--blue)}
+.rfbody{margin-top:12px}
+.rfgrid2{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px}
+.rfcheck{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px}
+.rfcheck input[type=checkbox]{width:16px;height:16px;cursor:pointer;accent-color:var(--blue);flex-shrink:0}
+.rfcheck input[type=number]{height:32px;padding:0 10px;border:1px solid var(--border);border-radius:20px;font-size:12px;width:90px;font-family:'Inter',sans-serif;outline:none;text-align:center}
+.rfcheck input[type=number]:focus{border-color:var(--blue)}
+.rfinp{height:36px;padding:0 14px;border:1px solid var(--border);border-radius:20px;font-size:13px;width:100%;font-family:'Inter',sans-serif;outline:none;text-align:center}
+.rfinp:focus{border-color:var(--blue)}
+
+@media(max-width:768px){.sb{display:none}.main{margin-left:0}.vlayout{flex-direction:column;height:auto}.rpanel{width:100%!important}.eg{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- ═══ LOGIN ═══ -->
+<div id="loginPage" class="lw">
+  <div class="lcard">
+    <div class="ltitle">Аудитория.УрФУ</div>
+    <input class="linp" type="text" id="loginEmail" placeholder="Логин" value="admin@urfu.ru">
+    <input class="linp" type="password" id="loginPassword" placeholder="Пароль">
+    <div class="lact"><button class="btn bs bsm" onclick="doLogin()">Войти</button></div>
+    <div class="ldiv">или</div>
+    <button class="lbtn lbp" onclick="doLogin()">Войти через учётную запись УрФУ</button>
+  </div>
+</div>
+
+<!-- ═══ APP ═══ -->
+<div id="appShell" hidden>
+
+  <header class="hdr">
+    <span class="logo" onclick="nav('buildings')">Аудитория.УрФУ</span>
+    <div class="user-chip" onclick="toggleDrop()">
+      <div class="ava" id="uAva">А</div>
+      <span id="uName">—</span>
+      <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+    </div>
+  </header>
+
+  <nav class="sb">
+    <div class="ng">Здания и аудитории</div>
+    <button class="ni on" id="nav-buildings" onclick="nav('buildings',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 22V12h6v10M3 9h18"/></svg>
+      Здания
+    </button>
+    <button class="ni" id="nav-viewer" onclick="nav('viewer',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+      Схемы и аудитории
+    </button>
+    <div class="ng">Заявки</div>
+    <button class="ni" id="nav-tickets" onclick="nav('tickets',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 12v6a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h6"/><path d="M15 3h6v6M10 14L21 3"/></svg>
+      Заявки
+      <span class="nbadge" id="tBadge" hidden>0</span>
+    </button>
+    <div class="ng">Администрирование</div>
+    <button class="ni" id="nav-users" onclick="nav('users',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+      Пользователи
+    </button>
+    <button class="ni" id="nav-logs" onclick="nav('logs',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      Логи действий
+    </button>
+    <hr style="margin:12px 8px">
+    <button class="ni" style="color:var(--red)" onclick="logout()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+      Выйти
+    </button>
+  </nav>
+
+  <main class="main">
+
+    <!-- ══ BUILDINGS ══ -->
+    <section id="pageBuildings" class="page on">
+      <div class="ptitle">Все здания</div>
+      <button class="badd" onclick="om('mAddBld')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Добавить здание
+      </button>
+      <div id="bldGrid" class="bgrid"><div style="color:var(--text2);font-size:13px">Загрузка...</div></div>
+    </section>
+
+    <!-- ══ VIEWER ══ -->
+    <section id="pageViewer" class="page">
+      <!-- Top controls -->
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:12px;flex-wrap:wrap">
+        <div class="fg">
+          <label>Здание</label>
+          <select id="vBldSel" onchange="loadViewerBuilding()" style="min-width:230px">
+            <option value="">— выберите здание —</option>
+          </select>
+        </div>
+        <div>
+          <div class="fplbl" style="margin-bottom:5px">Этаж</div>
+          <div class="fpills" id="floorPills"></div>
+        </div>
+        <div style="margin-left:auto;display:flex;gap:8px;align-items:flex-end">
+          <div class="fg">
+            <label>Поиск аудитории</label>
+            <div style="display:flex;gap:6px">
+              <input type="text" id="roomSearch" placeholder="Номер..." style="min-width:150px" onkeydown="if(event.key==='Enter')searchRoom()">
+              <button class="btn bs bsm" onclick="searchRoom()">Найти</button>
+            </div>
+          </div>
+          <button class="btn bs bsm" id="btnRoomFilter" onclick="toggleRoomFilter()" style="gap:6px;flex-shrink:0">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+            Фильтры
+            <span id="roomFilterBadge" hidden style="background:var(--blue);color:#fff;border-radius:10px;font-size:10px;font-weight:700;padding:1px 6px;min-width:16px;text-align:center">0</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Room filter overlay panel -->
+      <div id="roomFilterPanel" hidden style="position:relative;z-index:60;margin-bottom:4px">
+        <div style="position:absolute;right:0;top:0;background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:22px 26px 18px;width:500px;max-width:calc(100vw - var(--sw) - 40px);box-shadow:var(--shm);max-height:80vh;overflow-y:auto">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <span style="font-size:16px;font-weight:700">Фильтры</span>
+            <button class="mx" onclick="toggleRoomFilter()">×</button>
+          </div>
+
+          <!-- Тип помещения -->
+          <div class="rfsection">
+            <div class="rfhdr" onclick="toggleRfSec('rfPurposeBody','rfPurposeChv')">
+              <span>Тип помещения</span>
+              <svg id="rfPurposeChv" width="14" height="14" viewBox="0 0 20 20" fill="currentColor" style="transform:rotate(180deg);transition:transform .2s;flex-shrink:0"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+            </div>
+            <div id="rfPurposeBody" class="rfbody">
+              <div class="rfgrid2">
+                <label class="rfcheck"><input type="checkbox" value="Лекционная аудитория"> Лекционная аудитория</label>
+                <label class="rfcheck"><input type="checkbox" value="Компьютерный класс"> Компьютерный класс</label>
+                <label class="rfcheck"><input type="checkbox" value="Мультимедийная аудитория"> Мультимедийная аудитория</label>
+                <label class="rfcheck"><input type="checkbox" value="Лаборатория"> Лаборатория</label>
+                <label class="rfcheck"><input type="checkbox" value="Административный кабинет"> Административный кабинет</label>
+                <label class="rfcheck"><input type="checkbox" value="Техническое помещение"> Техническое помещение</label>
+                <label class="rfcheck"><input type="checkbox" value="Склад"> Склад</label>
+                <label class="rfcheck"><input type="checkbox" value="Санузел"> Санузел</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Оснащение (загружается динамически) -->
+          <div class="rfsection">
+            <div class="rfhdr" onclick="toggleRfSec('rfFeatsBody','rfFeatsChv')">
+              <span>Оснащение</span>
+              <svg id="rfFeatsChv" width="14" height="14" viewBox="0 0 20 20" fill="currentColor" style="transform:rotate(180deg);transition:transform .2s;flex-shrink:0"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+            </div>
+            <div id="rfFeatsBody" class="rfbody">
+              <div id="rfFeatsGrid" style="display:flex;flex-direction:column;gap:8px">
+                <span style="font-size:12px;color:var(--text2)">Загрузка...</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Вместимость -->
+          <div class="rfsection">
+            <div class="rfhdr" onclick="toggleRfSec('rfCapBody','rfCapChv')">
+              <span>Вместимость</span>
+              <svg id="rfCapChv" width="14" height="14" viewBox="0 0 20 20" fill="currentColor" style="transform:rotate(180deg);transition:transform .2s;flex-shrink:0"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+            </div>
+            <div id="rfCapBody" class="rfbody">
+              <div style="display:flex;gap:16px">
+                <div class="fg" style="flex:1"><label>От</label><input type="number" id="rfCapFrom" placeholder="0" class="rfinp" min="0"></div>
+                <div class="fg" style="flex:1"><label>До</label><input type="number" id="rfCapTo" placeholder="250" class="rfinp" min="0"></div>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:12px;margin-top:20px">
+            <button class="btn bs bfull" onclick="resetRoomFilter()">Сбросить</button>
+            <button class="btn bp bfull" onclick="applyRoomFilter()">Применить</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="vTitle" style="font-size:20px;font-weight:700;text-align:center;margin-bottom:10px"></div>
+
+      <div class="vlayout">
+        <!-- Map -->
+        <div class="vmap" id="vMapWrap">
+          <div class="vmsg">Выберите здание и этаж для просмотра схемы</div>
+          <div class="vzoom">
+            <button class="vzb" onclick="zoom(0.25)">+</button>
+            <button class="vzb" onclick="zoom(-0.25)">−</button>
+          </div>
+        </div>
+
+        <!-- Rooms list sidebar -->
+        <div style="width:200px;flex-shrink:0;display:flex;flex-direction:column;gap:0;border-left:1px solid var(--border);background:#fff;border-radius:0 var(--r) var(--r) 0;overflow:hidden" id="roomsListWrap" hidden>
+          <div style="padding:10px 12px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.05em">Аудитории</div>
+          <div id="roomsList" class="rlist" style="padding:8px;overflow-y:auto;flex:1"></div>
+        </div>
+
+        <!-- Room detail panel -->
+        <div class="rpanel hidden-panel" id="rPanel">
+          <div class="rphdr">
+            <div class="rpnum" id="rpNum">—</div>
+            <div class="rphdr-btns">
+              <button class="btn bs bsm" onclick="openEditRoom()" title="Редактировать">✏️ Изменить</button>
+              <button class="mx" onclick="closePanel()">×</button>
+            </div>
+          </div>
+          <div class="rptabs">
+            <button class="rptab on" onclick="switchPTab('rpBasic',this)">Основное</button>
+            <button class="rptab" onclick="switchPTab('rpTix',this)">Заявки</button>
+          </div>
+          <div class="rpbody">
+            <div id="rpBasic">
+              <div class="irow"><span class="ilbl">Этаж</span><span class="ival" id="rpFloor">—</span></div>
+              <div class="irow"><span class="ilbl">Тип помещения</span><span class="ival" id="rpPurpose">—</span></div>
+              <div class="irow"><span class="ilbl">Вместимость</span><span class="ival" id="rpCap">—</span></div>
+              <div class="irow" id="rpAreaRow" hidden><span class="ilbl">Площадь</span><span class="ival" id="rpArea">—</span></div>
+              <div class="irow" id="rpDescRow" hidden><span class="ilbl">Описание</span><span class="ival" id="rpDesc">—</span></div>
+              <div id="rpEqWrap" hidden>
+                <div style="display:flex;align-items:center;justify-content:space-between;margin:12px 0 0">
+                  <span style="font-size:13px;font-weight:600">Оснащение</span>
+                  <button class="exbtn" onclick="toggleEqDetail()">↗ Развернуть</button>
+                </div>
+                <table class="eqtbl" id="rpEqTbl">
+                  <thead><tr><th>Тип оснащения</th><th>Количество</th></tr></thead>
+                  <tbody id="rpEqBody"></tbody>
+                </table>
+              </div>
+              <div id="rpMediaWrap" hidden>
+                <div style="font-size:13px;font-weight:600;margin:14px 0 4px">Мультимедиа</div>
+                <div class="mc">
+                  <div class="mc-main"><img id="rpMainImg" src="" alt=""></div>
+                  <button class="mc-nav mc-l" onclick="mediaNv(-1)">‹</button>
+                  <button class="mc-nav mc-r" onclick="mediaNv(1)">›</button>
+                  <div class="mc-thumbs" id="rpThumbs"></div>
+                </div>
+              </div>
+            </div>
+            <div id="rpTix" hidden>
+              <div id="rpTixList" style="font-size:13px;color:var(--text2);padding-top:4px">Загрузка...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ TICKETS ══ -->
+    <section id="pageTickets" class="page">
+      <div class="tkhdr">
+        <div class="ptitle" style="margin:0">Заявки</div>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+          <button class="btn bs bsm" onclick="toggleFPanel()">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+            Фильтры
+          </button>
+          <button class="btn bp bsm" onclick="om('mAddTicket')">+ Новая заявка</button>
+          <button class="btn bs bsm" onclick="pollYandex()" title="Опросить Яндекс Формы вручную">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+            Синхронизировать
+          </button>
+        </div>
+      </div>
+
+      <div class="tktabs" style="margin-bottom:16px">
+        <button class="tktab on" onclick="switchTTab('all',this)">Все заявки</button>
+        <button class="tktab" onclick="switchTTab('my',this)">Мои заявки</button>
+      </div>
+
+      <div id="tFilterPanel" class="fpanel" hidden>
+        <div class="row">
+          <div class="fg">
+            <label>Аудитория</label>
+            <select id="fRoomSel" style="min-width:200px">
+              <option value="">Все аудитории</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label>Статус</label>
+            <select id="fStatus" style="min-width:150px">
+              <option value="">Все статусы</option>
+              <option value="new">Новая</option>
+              <option value="assigned">Назначена</option>
+              <option value="in_progress">В работе</option>
+              <option value="closed">Закрыта</option>
+            </select>
+          </div>
+          <div style="display:flex;align-items:flex-end;gap:8px">
+            <button class="btn bp bsm" onclick="loadTickets()">Применить</button>
+            <button class="btn bs bsm" onclick="clearTFilters()">Сбросить</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="tw">
+        <table>
+          <thead><tr>
+            <th style="width:50px">№</th>
+            <th style="width:100px">Аудитория</th>
+            <th>Описание</th>
+            <th style="width:120px">Статус</th>
+            <th style="width:170px">Исполнитель</th>
+            <th style="width:110px">Дата подачи</th>
+            <th style="width:44px"></th>
+          </tr></thead>
+          <tbody id="tBody">
+            <tr><td colspan="7" style="text-align:center;color:var(--text2);padding:28px">Загрузка...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ══ USERS ══ -->
+    <section id="pageUsers" class="page">
+      <div class="ptitle">Пользователи</div>
+      <div class="card">
+        <div class="ctitle">Добавить пользователя</div>
+        <div class="row">
+          <div class="fg"><label>Email</label><input type="email" id="nuEmail" value="new@urfu.ru" style="min-width:200px"></div>
+          <div class="fg"><label>ФИО</label><input type="text" id="nuName" value="Новый Пользователь" style="min-width:200px"></div>
+          <div class="fg"><label>Роль</label>
+            <select id="nuRole" style="min-width:160px">
+              <option value="user">Пользователь</option>
+              <option value="admin">Администратор</option>
+              <option value="super_admin">Суперадминистратор</option>
+            </select>
+          </div>
+          <div style="display:flex;align-items:flex-end"><button class="btn bg" onclick="addUser()">+ Добавить</button></div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="fg"><label>Поиск в LDAP (ФИО или Email)</label><input type="text" id="ldapQ" placeholder="иванов..." style="min-width:220px"></div>
+          <div style="display:flex;align-items:flex-end"><button class="btn bs" onclick="searchLdap()">Найти</button></div>
+        </div>
+        <div id="ldapRes" hidden></div>
+      </div>
+      <div class="tw">
+        <table>
+          <thead><tr><th>ФИО</th><th>Email</th><th>Роль</th><th></th></tr></thead>
+          <tbody id="uBody"><tr><td colspan="4" style="text-align:center;padding:28px;color:var(--text2)">—</td></tr></tbody>
+        </table>
+      </div>
+      <button class="btn bs" style="margin-top:12px" onclick="loadUsers()">Загрузить всех пользователей</button>
+    </section>
+
+    <!-- ══ LOGS ══ -->
+    <section id="pageLogs" class="page">
+      <div class="ptitle">Логи действий</div>
+      <div class="card">
+        <div class="row">
+          <button class="btn bs" onclick="getAllLogs()">Все логи</button>
+          <div class="fg"><label>ID пользователя</label><input type="text" id="lUID" placeholder="UUID..." style="min-width:230px"></div>
+          <div style="display:flex;align-items:flex-end"><button class="btn bs" onclick="getLogsByUser()">По пользователю</button></div>
+          <div class="fg"><label>ID объекта</label><input type="text" id="lTID" placeholder="UUID..." style="min-width:200px"></div>
+          <div class="fg"><label>Тип объекта</label><input type="text" id="lTType" placeholder="room, building..." style="min-width:130px"></div>
+          <div style="display:flex;align-items:flex-end"><button class="btn bs" onclick="getLogsByTarget()">По объекту</button></div>
+        </div>
+      </div>
+      <div id="logsTable" style="margin-top:4px"></div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ══ USER DROPDOWN ══ -->
+<div id="udrop" class="udrop" hidden>
+  <button class="ni" onclick="nav('users',document.getElementById('nav-users'));toggleDrop()">Пользователи</button>
+  <button class="ni" onclick="nav('logs',document.getElementById('nav-logs'));toggleDrop()">Логи</button>
+  <hr style="margin:4px 0;border:none;border-top:1px solid var(--border)">
+  <button class="ni" style="color:var(--red)" onclick="logout()">Выйти</button>
+</div>
+
+<!-- ══ MODALS ══ -->
+
+<!-- Add Building -->
+<div id="mAddBld" class="ov">
+  <div class="modal" style="max-width:420px">
+    <div class="mhdr"><div class="mtitle">Добавить здание</div><button class="mx" onclick="cm('mAddBld')">×</button></div>
+    <div class="row"><div class="fg fl"><label>Название здания</label><input type="text" id="bldName" class="fl" placeholder="ИРИТ-РТФ УрФУ"></div></div>
+    <div class="row"><div class="fg" style="width:140px"><label>Количество этажей</label><input type="number" id="bldFloors" value="5" class="fl"></div></div>
+    <div class="row"><div class="fg fl"><label>Фото здания</label>
+      <input type="file" id="bldPhoto" accept="image/*" class="fl">
+      <div id="bldPhotoPreview" style="margin-top:8px;display:none">
+        <img id="bldPreviewImg" style="max-width:100%;max-height:120px;border-radius:8px;object-fit:cover">
+      </div>
+    </div></div>
+    <div style="display:flex;gap:10px;margin-top:16px">
+      <button class="btn bp" onclick="createBuilding()">Создать здание</button>
+      <button class="btn bs" onclick="cm('mAddBld')">Отмена</button>
+    </div>
+  </div>
+</div>
+
+<div id="mPanorama" class="ov">
+  <div class="modal" style="max-width: 90vw; max-height: 90vh; width: 800px;">
+    <div class="mhdr">
+      <div class="mtitle" id="panoramaTitle">Панорама 360°</div>
+      <button class="mx" onclick="closePanoramaViewer()">×</button>
+    </div>
+    <div id="panoramaViewer" style="width: 100%; height: 500px; border-radius: 8px; overflow: hidden;"></div>
+    <div style="margin-top: 12px; text-align: center; color: var(--text2); font-size: 12px;">
+      🖱️ Перетаскивайте мышью для вращения | 🔍 Колесико для масштабирования
+    </div>
+  </div>
+</div>
+
+<!-- Edit Building -->
+<div id="mEditBld" class="ov">
+  <div class="modal" style="max-width:460px">
+    <div class="mhdr"><div class="mtitle">Редактировать здание</div><button class="mx" onclick="cm('mEditBld')">×</button></div>
+    <input type="hidden" id="eBldId">
+    <div class="row"><div class="fg fl"><label>Название</label><input type="text" id="eBldName" class="fl"></div></div>
+    <hr>
+    <div class="sub">Загрузить схему этажа</div>
+    <div class="row">
+      <div class="fg"><label>Этаж</label>
+        <select id="eBldSchemaFloor" style="min-width:120px"><option value="">—</option></select>
+      </div>
+      <div class="fg"><label>Файл схемы</label><input type="file" id="eBldSchemaFile" accept="image/*"></div>
+      <div style="display:flex;align-items:flex-end"><button class="btn bs" onclick="uploadSchemaFromBld()">Загрузить</button></div>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:16px">
+      <button class="btn bp" onclick="updateBuilding()">Сохранить</button>
+      <button class="btn bd" onclick="deleteBuilding()">Удалить здание</button>
+      <button class="btn bs" onclick="cm('mEditBld')">Отмена</button>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Room -->
+<div id="mEditRoom" class="ov">
+  <div class="modal">
+    <div class="mhdr"><div class="mtitle" id="eTitleRoom">Редактировать аудиторию</div><button class="mx" onclick="cm('mEditRoom')">×</button></div>
+    <input type="hidden" id="eRoomId">
+    <div class="eg">
+      <div class="fg"><label>Номер аудитории</label><input type="text" id="eRNum" class="fl"></div>
+      <div class="fg"><label>Этаж (только просмотр)</label><input type="text" id="eRFlr" class="fl" disabled></div>
+      <div class="fg"><label>Тип помещения</label>
+        <select id="eRPurpose" class="fl">
+          <option>Лекционная аудитория</option><option>Компьютерный класс</option>
+          <option>Мультимедийная аудитория</option><option>Лаборатория</option>
+          <option>Административный кабинет</option><option>Санузел</option>
+          <option>Склад</option><option>Техническое помещение</option>
+        </select>
+      </div>
+      <div class="fg"><label>Вместимость</label><input type="number" id="eRCap" class="fl"></div>
+      <div class="fg"><label>Площадь, м²</label><input type="text" id="eRArea" class="fl"></div>
+      <div class="fg egf"><label>Описание</label><textarea id="eRDesc" class="fl" rows="2"></textarea></div>
+    </div>
+    <div style="margin-top:14px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <span style="font-size:13px;font-weight:600">Оснащение</span>
+        <button class="btn bs bsm" onclick="openFeatModal()">Редактировать оснащение</button>
+      </div>
+      <div id="eFeatPrev" style="background:var(--bg);padding:9px 12px;border-radius:8px;font-size:12px;color:var(--text2);min-height:32px">Нет данных</div>
+    </div>
+    <div style="margin-top:14px">
+      <div style="font-size:13px;font-weight:600;margin-bottom:8px">Медиафайлы</div>
+      <div class="row">
+        <input type="file" id="eMediaFile" accept="image/*">
+        <select id="eMediaType" style="min-width:140px"><option value="photo">Фотография</option><option value="panorama">Панорама 360°</option></select>
+        <button class="btn bp bsm" onclick="uploadEMedia()">Загрузить</button>
+      </div>
+      <div id="eMediaGrid" class="mg"></div>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:20px">
+      <button class="btn bp" onclick="saveRoomEdit()">Сохранить изменения</button>
+      <button class="btn bd" onclick="deleteRoomModal()">Удалить аудиторию</button>
+      <button class="btn bs" onclick="cm('mEditRoom')">Отмена</button>
+    </div>
+  </div>
+</div>
+
+<!-- Features -->
+<div id="mFeatures" class="ov">
+  <div class="modal">
+    <div class="mhdr"><div class="mtitle">Оснащение аудитории</div><button class="mx" onclick="cm('mFeatures')">×</button></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 60px 1fr 32px;gap:7px;padding-bottom:7px;border-bottom:1px solid var(--border);margin-bottom:4px">
+      <span style="font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.05em">Название</span>
+      <span style="font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.05em">Значение</span>
+      <span style="font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.05em">Кол.</span>
+      <span style="font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.05em">Тех. характеристики</span>
+      <span></span>
+    </div>
+    <div id="featList"></div>
+    <button class="btn bs bsm" style="margin-top:10px" onclick="addFRow()">+ Добавить позицию</button>
+    <div style="display:flex;gap:10px;margin-top:18px">
+      <button class="btn bg" onclick="saveFeats()">Сохранить</button>
+      <button class="btn bs" onclick="cm('mFeatures')">Отмена</button>
+    </div>
+  </div>
+</div>
+
+<!-- Draw Area — assign room to drawn polygon -->
+<div id="mDrawArea" class="ov">
+  <div class="modal" style="max-width:500px">
+    <div class="mhdr"><div class="mtitle">Привязать аудиторию к области</div><button class="mx" onclick="cm('mDrawArea');cancelDrawing()">×</button></div>
+    <input type="hidden" id="drawAreaPoints">
+    <input type="hidden" id="daFloorId">
+
+    <div class="fg" style="margin-bottom:14px">
+      <label>Привязать к существующей аудитории</label>
+      <select id="daRoomSel" class="fl" onchange="toggleNewRoomFields()">
+        <option value="">— создать новую аудиторию —</option>
+      </select>
+    </div>
+
+    <div id="newRoomFields">
+      <hr style="margin-bottom:14px">
+      <div style="font-size:12px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">Новая аудитория</div>
+      <div class="eg">
+        <div class="fg"><label>Номер аудитории *</label><input type="text" id="daRoomNum" placeholder="301" class="fl"></div>
+        <div class="fg"><label>Вместимость</label><input type="number" id="daRoomCap" placeholder="30" class="fl"></div>
+        <div class="fg"><label>Площадь, м²</label><input type="number" id="daRoomArea" placeholder="45.5" step="0.1" class="fl"></div>
+        <div class="fg egf"><label>Тип помещения</label>
+          <select id="daRoomPurpose" class="fl">
+            <option>Лекционная аудитория</option><option>Компьютерный класс</option>
+            <option>Мультимедийная аудитория</option><option>Лаборатория</option>
+            <option>Административный кабинет</option><option>Санузел</option>
+            <option>Склад</option><option>Техническое помещение</option>
+          </select>
+        </div>
+        <div class="fg egf"><label>Описание</label><input type="text" id="daRoomDesc" placeholder="Описание аудитории..." class="fl"></div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:10px;margin-top:20px">
+      <button class="btn bp" onclick="saveAreaModal()">Сохранить область</button>
+      <button class="btn bs" onclick="cm('mDrawArea');cancelDrawing()">Отмена</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Ticket -->
+<div id="mAddTicket" class="ov">
+  <div class="modal" style="max-width:500px">
+    <div class="mhdr"><div class="mtitle">Подать заявку</div><button class="mx" onclick="cm('mAddTicket')">×</button></div>
+    <div class="row">
+      <div class="fg"><label>Номер аудитории</label><input type="text" id="tRoom" placeholder="301" style="min-width:120px"></div>
+      <div class="fg"><label>Email заявителя</label><input type="email" id="tEmail" placeholder="user@urfu.ru" style="min-width:220px"></div>
+    </div>
+    <div class="fg" style="margin-bottom:18px"><label>Описание проблемы</label><textarea id="tDesc" rows="3" class="fl" placeholder="Опишите проблему..."></textarea></div>
+    <div style="display:flex;gap:10px">
+      <button class="btn bp" onclick="createTicketExt()">Отправить заявку</button>
+      <button class="btn bs" onclick="cm('mAddTicket')">Отмена</button>
+    </div>
+  </div>
+</div>
+
+<!-- Ticket Detail -->
+<div id="mTicket" class="ov">
+  <div class="modal" style="max-width:540px">
+    <div class="mhdr"><div class="mtitle" id="tDTitle">Заявка</div><button class="mx" onclick="cm('mTicket')">×</button></div>
+    <input type="hidden" id="tDId">
+    <div id="tDBody"></div>
+    <hr>
+    <div class="sub">Управление заявкой</div>
+    <div class="row">
+      <div class="fg"><label>Изменить статус</label>
+        <select id="tDStatus" style="min-width:150px">
+          <option value="new">Новая</option><option value="assigned">Назначена</option>
+          <option value="in_progress">В работе</option><option value="closed">Закрыта</option>
+        </select>
+      </div>
+      <div style="display:flex;align-items:flex-end"><button class="btn bp bsm" onclick="updTStatus()">Применить</button></div>
+    </div>
+    <div class="row">
+      <div class="fg" style="flex:1"><label>ID исполнителя</label><input type="text" id="tDAssign" placeholder="UUID..." class="fl"></div>
+      <div style="display:flex;align-items:flex-end;gap:7px">
+        <button class="btn bt bsm" onclick="assignT()">Назначить</button>
+        <button class="btn bs bsm" onclick="takeT()">Взять</button>
+        <button class="btn bg bsm" onclick="closeT()">Закрыть</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════ STATE ═══════════════════ */
+const API = 'http://localhost:3000';
+let authToken = null;
+let allBuildings = [];
+let allRooms = [];
+let viewerFloors = [];
+let curFloorIdx = 0;
+let mapScale = 1;
+let curRoomData = null;
+let curMediaList = [];
+let curMediaIdx = 0;
+let curEditRoomId = null;
+let curFeatures = [];
+let curTTab = 'all';
+let editMode = false; // Режим редактирования (удаления областей)
+let currentAreas = []; // Список текущих областей с их ID
+let deleteMode = false;
+let psvInstance = null; // Photo Sphere Viewer instance
+let pannellumViewer = null;
+
+/* ═══════════════════ INIT ═══════════════════ */
+document.getElementById('loginPage').style.display = 'flex';
+document.getElementById('appShell').hidden = true;
+
+function doLogin() {
+  const email = document.getElementById('loginEmail').value;
+  const pass  = document.getElementById('loginPassword').value;
+  document.getElementById('loginPage').style.display = 'none';
+  document.getElementById('appShell').hidden = false;
+  loginApi(email, pass);
+}
+function logout() {
+  authToken = null;
+  document.getElementById('appShell').hidden = true;
+  document.getElementById('loginPage').style.display = 'flex';
+  document.getElementById('loginPassword').value = '';
+}
+
+/* ═══════════════════ NAV ═══════════════════ */
+function nav(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll('.ni').forEach(n => n.classList.remove('on'));
+  const map = {buildings:'pageBuildings',viewer:'pageViewer',tickets:'pageTickets',users:'pageUsers',logs:'pageLogs'};
+  document.getElementById(map[id])?.classList.add('on');
+  if (btn) btn.classList.add('on');
+  else document.getElementById('nav-'+id)?.classList.add('on');
+  closeDrop();
+  if (id === 'viewer') populateBldSelect();
+  if (id === 'tickets') { loadTickets(); loadRoomsForFilter(); }
+}
+function toggleDrop() { document.getElementById('udrop').hidden = !document.getElementById('udrop').hidden; }
+function closeDrop()  { document.getElementById('udrop').hidden = true; }
+document.addEventListener('click', e => { if (!e.target.closest('.user-chip') && !e.target.closest('#udrop')) closeDrop(); });
+
+/* ═══════════════════ MODALS ═══════════════════ */
+function om(id) { document.getElementById(id).classList.add('open'); }
+function cm(id) { document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.ov').forEach(o => o.addEventListener('click', e => { if (e.target === o) o.classList.remove('open'); }));
+
+/* ═══════════════════ HELPERS ═══════════════════ */
+function H(json=true) {
+  const h = json ? {'Content-Type':'application/json'} : {};
+  if (authToken) h['Authorization'] = `Bearer ${authToken}`;
+  return h;
+}
+async function req(path, opts={}) {
+  try { const r = await fetch(API+path, opts); return {ok:r.ok,status:r.status,data:await r.json()}; }
+  catch(e) { return {ok:false,data:{message:e.message}}; }
+}
+function toast(msg, type='info') {
+  const prev = document.getElementById('_t'); if (prev) prev.remove();
+  const c = {success:'#2E7D32',error:'#C62828',info:'#1565C0'};
+  const bg= {success:'#E8F5E9',error:'#FFEBEE',info:'#E3F2FD'};
+  const el = Object.assign(document.createElement('div'),{id:'_t',textContent:msg});
+  Object.assign(el.style,{position:'fixed',bottom:'22px',right:'22px',zIndex:'9999',background:bg[type],color:c[type],border:`1px solid ${c[type]}33`,borderRadius:'12px',padding:'10px 18px',fontSize:'13px',fontWeight:'500',boxShadow:'0 4px 20px rgba(0,0,0,.15)',maxWidth:'340px',fontFamily:'Inter,sans-serif'});
+  document.body.appendChild(el); setTimeout(()=>el.remove(),4000);
+}
+function fmtDate(d) { if (!d) return '—'; return new Date(d).toLocaleDateString('ru-RU'); }
+function stLabel(s) { return {new:'Новая',assigned:'Назначена',in_progress:'В работе',closed:'Закрыта'}[s]||s; }
+
+/* ═══════════════════ AUTH ═══════════════════ */
+async function loginApi(email, pass) {
+  const res = await req('/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password:pass})});
+  if (res.ok) {
+    authToken = res.data.access_token;
+    const name = res.data.fullName || email;
+    document.getElementById('uName').textContent = name;
+    document.getElementById('uAva').textContent = name[0]?.toUpperCase()||'А';
+    toast('Вход выполнен','success');
+    loadBuildings();
+    loadTickets();
+    loadRoomsForFilter();
+  } else {
+    toast('Ошибка входа: ' + (res.data.message||'Неверные данные'),'error');
+  }
+}
+
+/* ═══════════════════ BUILDINGS ═══════════════════ */
+async function loadBuildings() {
+  const res = await req('/api/buildings',{headers:H()});
+  if (!res.ok) return;
+  allBuildings = res.data;
+  renderBuildings(allBuildings);
+  populateBldSelect();
+}
+
+function renderBuildings(list) {
+  const g = document.getElementById('bldGrid');
+  if (!list?.length) { g.innerHTML='<div style="color:var(--text2)">Зданий не найдено</div>'; return; }
+  g.innerHTML = list.map(b=>`
+    <div class="bcard" onclick="openBldViewer('${b.id}')">
+      <div class="bph">
+        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#90CAF9" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 22V12h6v10M3 9h18"/></svg>
+      </div>
+      <div class="bname">${b.name}</div>
+      <button class="bmenu" onclick="event.stopPropagation();openEditBld('${b.id}','${escQ(b.name)}')">⋮</button>
+    </div>
+  `).join('');
+}
+
+function escQ(s) { return (s||'').replace(/'/g,"\\'").replace(/"/g,'&quot;'); }
+
+function openBldViewer(id) {
+  nav('viewer', document.getElementById('nav-viewer'));
+  document.getElementById('vBldSel').value = id;
+  loadViewerBuilding();
+}
+
+async function createBuilding() {
+  const name = document.getElementById('bldName').value.trim();
+  const floorsCount = parseInt(document.getElementById('bldFloors').value);
+  if (!name) { toast('Введите название','error'); return; }
+  const res = await req('/api/buildings',{method:'POST',headers:H(),body:JSON.stringify({name,floorsCount})});
+  if (res.ok) { toast('Здание создано','success'); cm('mAddBld'); document.getElementById('bldName').value=''; loadBuildings(); }
+  else toast(res.data.message||'Ошибка','error');
+}
+
+async function openEditBld(id, name) {
+  document.getElementById('eBldId').value = id;
+  document.getElementById('eBldName').value = name;
+  // load floors for schema upload
+  const res = await req(`/api/floors/building/${id}`,{headers:H()});
+  const sel = document.getElementById('eBldSchemaFloor');
+  sel.innerHTML = '<option value="">— выберите этаж —</option>';
+  if (res.ok) res.data.sort((a,b)=>a.floorNumber-b.floorNumber).forEach(f=>{
+    const o = document.createElement('option'); o.value=f.id; o.textContent=`Этаж ${f.floorNumber}${f.name?` — ${f.name}`:''}`;
+    sel.appendChild(o);
+  });
+  om('mEditBld');
+}
+async function updateBuilding() {
+  const id   = document.getElementById('eBldId').value;
+  const name = document.getElementById('eBldName').value.trim();
+  if (!name) { toast('Введите название','error'); return; }
+  const res = await req(`/api/buildings/${id}`,{method:'PATCH',headers:H(),body:JSON.stringify({name})});
+  if (res.ok) { toast('Сохранено','success'); cm('mEditBld'); loadBuildings(); }
+  else toast(res.data.message||'Ошибка','error');
+}
+async function deleteBuilding() {
+  if (!confirm('Удалить здание со всеми этажами и аудиториями?')) return;
+  const id = document.getElementById('eBldId').value;
+  const res = await req(`/api/buildings/${id}`,{method:'DELETE',headers:H()});
+  if (res.ok) { toast('Здание удалено','success'); cm('mEditBld'); loadBuildings(); }
+  else toast(res.data.message||'Ошибка','error');
+}
+async function uploadSchemaFromBld() {
+  const floorId = document.getElementById('eBldSchemaFloor').value;
+  const file    = document.getElementById('eBldSchemaFile').files[0];
+  if (!floorId) { toast('Выберите этаж','error'); return; }
+  if (!file)    { toast('Выберите файл','error'); return; }
+  const fd = new FormData(); fd.append('file',file);
+  const r = await fetch(`${API}/api/floor-schemas/upload/${floorId}`,{method:'POST',headers:authToken?{'Authorization':`Bearer ${authToken}`}:{},body:fd});
+  if (r.ok) { toast('Схема загружена','success'); document.getElementById('eBldSchemaFile').value=''; if (document.getElementById('vBldSel').value) loadFloor(viewerFloors[curFloorIdx]?.id); }
+  else { const e=await r.json(); toast(e.message||'Ошибка','error'); }
+}
+
+/* ═══════════════════ VIEWER ═══════════════════ */
+function populateBldSelect() {
+  const sel = document.getElementById('vBldSel');
+  const cur = sel.value;
+  sel.innerHTML = '<option value="">— выберите здание —</option>' +
+    allBuildings.map(b=>`<option value="${b.id}">${b.name}</option>`).join('');
+  if (cur) sel.value = cur;
+}
+
+async function loadViewerBuilding() {
+  const id = document.getElementById('vBldSel').value;
+  if (!id) return;
+  closePanel();
+  const bld = allBuildings.find(b=>b.id===id);
+  document.getElementById('vTitle').textContent = bld?.name||'';
+  const res = await req(`/api/floors/building/${id}`,{headers:H()});
+  if (!res.ok) return;
+  viewerFloors = res.data.sort((a,b)=>a.floorNumber-b.floorNumber);
+  renderFloorPills();
+  if (viewerFloors.length) { curFloorIdx=0; loadFloor(viewerFloors[0].id); }
+}
+
+function renderFloorPills() {
+  document.getElementById('floorPills').innerHTML = viewerFloors.map((f,i)=>`
+    <button class="fp${i===0?' on':''}" onclick="selFloor(${i})">${f.floorNumber}</button>
+  `).join('');
+}
+function selFloor(i) {
+  curFloorIdx = i;
+  document.querySelectorAll('.fp').forEach((p,j)=>p.classList.toggle('on',j===i));
+  loadFloor(viewerFloors[i].id); closePanel();
+}
+
+/* ─ Schema image URL helper ─ */
+function schemaUrl(imageUrl) {
+  if (!imageUrl) return null;
+  if (imageUrl.startsWith('http')) return imageUrl;
+  return API + imageUrl;
+}
+
+/* ─ Floor schema + rooms state ─ */
+let curFloorId = null;
+let curSchema = null;       // {id, imageUrl, width, height}
+let floorRooms = [];        // rooms with areas
+let editorMode = false;     // are we in editor mode?
+let drawingPoints = [];     // points being drawn [[x%,y%],...]
+let svgScale = {x:1,y:1,ox:0,oy:0}; // image render info
+
+async function loadFloor(floorId) {
+  if (!floorId) return;
+  curFloorId = floorId;
+  drawingPoints = [];
+  editorMode = false;
+
+  if (deleteMode) {
+    deleteMode = false;
+    const btn = document.getElementById('btnDeleteMode');
+    if (btn) {
+      btn.textContent = '🗑 Режим удаления';
+      btn.classList.add('bt');
+      btn.classList.remove('bd');
+    }
+  }
+
+  const wrap = document.getElementById('vMapWrap');
+  wrap.innerHTML = `<div class="vmsg">Загрузка схемы...</div>
+    <div class="vzoom"><button class="vzb" onclick="zoom(.25)">+</button><button class="vzb" onclick="zoom(-.25)">−</button></div>`;
+  mapScale = 1;
+
+  // Load schema
+  const res = await req(`/api/floor-schemas/floor/${floorId}`,{headers:H()});
+
+  if (res.ok && (res.data?.imageUrl || res.data?.url)) {
+    curSchema = res.data;
+    const imgSrc = schemaUrl(res.data.imageUrl || res.data.url);
+    renderSchemaViewer(wrap, imgSrc, floorId);
+  } else {
+    curSchema = null;
+    wrap.innerHTML = `<div class="vmsg">
+      Схема не загружена
+      <br>
+      <label class="btn bs bsm" style="margin-top:12px;cursor:pointer">
+        ↑ Загрузить схему
+        <input type="file" accept="image/*" style="display:none" onchange="uploadFloorSchemaInline(this,'${floorId}')">
+      </label>
+    </div>
+    <div class="vzoom"><button class="vzb" onclick="zoom(.25)">+</button><button class="vzb" onclick="zoom(-.25)">−</button></div>`;
+  }
+  await loadFloorRooms(floorId);
+}
+
+function renderSchemaViewer(wrap, imgSrc, floorId) {
+  wrap.innerHTML = `
+    <div id="schemaContainer" style="position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden">
+      <div id="schemaTransform" style="position:relative;transform-origin:center;transition:transform .2s">
+        <img id="floorImg" src="${imgSrc}" draggable="false"
+          style="display:block;max-width:100%;max-height:calc(100vh - 220px);user-select:none"
+          onload="onSchemaImgLoad(this)"
+          onerror="toast('Ошибка загрузки изображения схемы','error')">
+        <svg id="schemaSvg" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none" id="schemaSvg"></svg>
+      </div>
+    </div>
+    <div class="vzoom">
+      <button class="vzb" onclick="zoom(.25)">+</button>
+      <button class="vzb" onclick="zoom(-.25)">−</button>
+    </div>
+    <div id="schemaToolbar" style="position:absolute;bottom:14px;left:50%;transform:translateX(-50%);display:flex;gap:10px;z-index:10;background:rgba(255,255,255,0.9);padding:8px 16px;border-radius:30px;box-shadow:var(--shm)">
+      <label class="btn bs" style="cursor:pointer">
+        ↓ Загрузить схему
+        <input type="file" accept="image/*" style="display:none" onchange="uploadFloorSchemaInline(this,'${floorId}')">
+      </label>
+      <button class="btn bd" onclick="deleteSchema('${floorId}')">🗑 Удалить схему</button>
+      <button class="btn bp" id="btnAddArea" onclick="startDrawing()">+ Добавить область</button>
+      <button class="btn bt" id="btnDeleteMode" onclick="toggleDeleteMode()">🗑 Удалить область</button>
+      <button class="btn bg" id="btnSaveArea" onclick="saveDrawing()" hidden>✓ Сохранить</button>
+      <button class="btn bs" id="btnCancelArea" onclick="cancelDrawing()" hidden>× Отменить</button>
+    </div>
+  `;
+}
+
+function onSchemaImgLoad(img) {
+  const svg = document.getElementById('schemaSvg');
+  if (!svg) return;
+
+  // Match SVG size to image rendered size
+  function syncSize() {
+    svg.setAttribute('viewBox', `0 0 ${img.naturalWidth} ${img.naturalHeight}`);
+    svg.style.width  = img.offsetWidth  + 'px';
+    svg.style.height = img.offsetHeight + 'px';
+    svgScale = { w: img.naturalWidth, h: img.naturalHeight, rw: img.offsetWidth, rh: img.offsetHeight };
+    renderRoomAreas();
+  }
+  syncSize();
+  // Also sync on resize
+  const ro = new ResizeObserver(syncSize);
+  ro.observe(img);
+
+  // SVG sits on top — it handles ALL clicks
+  svg.style.pointerEvents = 'all';
+  svg.style.cursor = '';
+
+  svg.addEventListener('click', e => {
+    if (!editorMode) return;
+    // coords relative to SVG viewBox
+    const rect = svg.getBoundingClientRect();
+    const xPct = ((e.clientX - rect.left) / rect.width  * 100);
+    const yPct = ((e.clientY - rect.top)  / rect.height * 100);
+    drawingPoints.push([+xPct.toFixed(2), +yPct.toFixed(2)]);
+    renderDrawingTemp();
+  });
+}
+
+async function loadFloorRooms(floorId) {
+  const res = await req(`/api/rooms?floorId=${floorId}`, {headers:H()});
+  if (!res.ok) {
+    floorRooms = [];
+    allFloorRoomsCache = [];
+    document.getElementById('roomsListWrap').hidden = true;
+    return;
+  }
+  
+  // ✅ Извлекаем комнаты из пагинации
+  let rooms = [];
+  if (Array.isArray(res.data)) {
+    rooms = res.data;
+  } else if (res.data && Array.isArray(res.data.items)) {
+    rooms = res.data.items;
+  }
+  
+  floorRooms = rooms;
+  allFloorRoomsCache = [...rooms]; // Сохраняем копию для фильтрации
+  renderRoomsList(floorRooms);
+  await renderRoomAreas();
+}
+async function deleteArea(areaId, roomInfo) {
+  if (!confirm(`Удалить область для ${roomInfo}?`)) return;
+  
+  const res = await req(`/api/clickable-areas/${areaId}`, {
+    method: 'DELETE',
+    headers: H()
+  });
+  
+  if (res.ok) {
+    toast(`Область для ${roomInfo} удалена`, 'success');
+    // Перезагружаем области
+    await renderRoomAreas();
+  } else {
+    toast(res.data?.message || 'Ошибка при удалении области', 'error');
+  }
+}
+
+function toggleDeleteMode() {
+  deleteMode = !deleteMode;
+  const btn = document.getElementById('btnDeleteMode');
+  const svg = document.getElementById('schemaSvg');
+  
+  if (deleteMode) {
+    btn.textContent = '✓ Выйти из режима';
+    btn.classList.remove('bt');
+    btn.classList.add('bd');
+    if (svg) svg.style.cursor = 'crosshair';
+    toast('Режим удаления: кликните на область на схеме для удаления', 'info');
+    
+    // Подсвечиваем все области красным
+    document.querySelectorAll('.room-area').forEach(area => {
+      if (area.tagName === 'polygon') {
+        area.style.fill = 'rgba(229, 57, 53, 0.3)';
+        area.style.stroke = '#E53935';
+        area.style.strokeWidth = '2';
+      }
+    });
+  } else {
+    btn.textContent = '🗑 Удалить область';
+    btn.classList.add('bt');
+    btn.classList.remove('bd');
+    if (svg) svg.style.cursor = '';
+    
+    // Возвращаем обычный вид
+    document.querySelectorAll('.room-area').forEach(area => {
+      if (area.tagName === 'polygon') {
+        area.style.fill = 'rgba(21, 101, 192, 0.18)';
+        area.style.stroke = '#1565C0';
+        area.style.strokeWidth = '1.5';
+      }
+    });
+  }
+}
+
+/* ─ Render existing room areas as SVG polygons ─ */
+async function renderRoomAreas() {
+  const svg = document.getElementById('schemaSvg');
+  if (!svg || !svgScale.w) return;
+  // Clear existing room polygons
+  svg.querySelectorAll('.room-area').forEach(e=>e.remove());
+
+  // Load clickable areas from API
+  let areas = [];
+  if (curSchema?.id) {
+    const aRes = await req(`/api/clickable-areas/schema/${curSchema.id}`, {headers:H()});
+    if (aRes.ok && Array.isArray(aRes.data)) areas = aRes.data;
+  }
+
+  // Build roomId→roomNumber map
+  const roomMap = {};
+  floorRooms.forEach(r => { roomMap[r.id] = r; });
+
+  areas.forEach(area => {
+    const points = area.coordinates?.points;
+    if (!points?.length) return;
+    const room = roomMap[area.roomId];
+    const pts = points.map(p=>`${p[0]*svgScale.w/100},${p[1]*svgScale.h/100}`).join(' ');
+    const poly = document.createElementNS('http://www.w3.org/2000/svg','polygon');
+    poly.setAttribute('points', pts);
+    poly.setAttribute('class','room-area');
+    poly.setAttribute('data-area-id', area.id);
+    poly.setAttribute('data-room-id', area.roomId);
+    poly.setAttribute('data-room-number', room?.number || '');
+    
+    // Устанавливаем цвет в зависимости от режима
+    if (deleteMode) {
+      poly.setAttribute('fill','rgba(229, 57, 53, 0.3)');
+      poly.setAttribute('stroke','#E53935');
+    } else {
+      poly.setAttribute('fill','rgba(21, 101, 192, 0.18)');
+      poly.setAttribute('stroke','#1565C0');
+    }
+    poly.setAttribute('stroke-width','1.5');
+    poly.style.cursor='pointer';
+    poly.style.pointerEvents='all';
+    
+    // Обработчик клика
+    poly.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (deleteMode) {
+        // В режиме удаления - удаляем область
+        deleteClickableArea(area.id, room?.number || 'аудиторию');
+      } else if (area.roomId) {
+        // В обычном режиме - показываем панель аудитории
+        showRoomPanel(area.roomId);
+      }
+    });
+
+    // Label
+    const cx = points.reduce((s,p)=>s+p[0],0)/points.length;
+    const cy = points.reduce((s,p)=>s+p[1],0)/points.length;
+    const txt = document.createElementNS('http://www.w3.org/2000/svg','text');
+    txt.setAttribute('x', cx*svgScale.w/100);
+    txt.setAttribute('y', cy*svgScale.h/100);
+    txt.setAttribute('text-anchor','middle');
+    txt.setAttribute('dominant-baseline','middle');
+    txt.setAttribute('font-size','10');
+    txt.setAttribute('font-weight','600');
+    txt.setAttribute('fill', deleteMode ? '#E53935' : '#1565C0');
+    txt.setAttribute('class','room-area');
+    txt.style.pointerEvents='none';
+    txt.textContent = room?.number || '';
+
+    svg.appendChild(poly);
+    svg.appendChild(txt);
+  });
+}
+
+async function deleteClickableArea(areaId, roomInfo) {
+  if (!confirm(`🗑 Удалить область для аудитории ${roomInfo}?\n\nОбласть будет удалена со схемы, но аудитория останется в системе.`)) {
+    return;
+  }
+  
+  try {
+    const response = await fetch(`${API}/api/clickable-areas/${areaId}`, {
+      method: 'DELETE',
+      headers: authToken ? {'Authorization': `Bearer ${authToken}`} : {}
+    });
+    
+    if (response.ok) {
+      // Проверяем, есть ли содержимое перед парсингом JSON
+      const contentType = response.headers.get('content-type');
+      let data = null;
+      
+      if (contentType && contentType.includes('application/json')) {
+        const text = await response.text();
+        if (text) {
+          try {
+            data = JSON.parse(text);
+          } catch(e) {
+            // Если не удалось распарсить, игнорируем
+            console.log('Empty or invalid JSON response');
+          }
+        }
+      }
+      
+      toast(`✅ Область для аудитории ${roomInfo} удалена`, 'success');
+      // Перезагружаем области на схеме
+      await renderRoomAreas();
+    } else {
+      const errorText = await response.text();
+      toast(`❌ Ошибка при удалении: ${errorText || response.statusText}`, 'error');
+    }
+  } catch(e) {
+    console.error('Delete error:', e);
+    toast(`✅ Область удалена (ошибка парсинга ответа)`, 'success');
+    // Всё равно перезагружаем, так как область скорее всего удалена
+    await renderRoomAreas();
+  }
+}
+
+/* ─ Drawing new area ─ */
+function startDrawing() {
+  if (!curSchema) { toast('Сначала загрузите схему','error'); return; }
+    if (deleteMode) {
+    toggleDeleteMode();
+  }
+  editorMode = true;
+  drawingPoints = [];
+  document.getElementById('btnAddArea').hidden = true;
+  document.getElementById('btnSaveArea').hidden = false;
+  document.getElementById('btnCancelArea').hidden = false;
+  const svg = document.getElementById('schemaSvg');
+  if (svg) svg.style.cursor = 'crosshair';
+  toast('Кликайте по схеме чтобы обозначить углы аудитории. Минимум 3 точки. Нажмите «Сохранить» для завершения.','info');
+}
+
+function cancelDrawing() {
+  editorMode = false;
+  drawingPoints = [];
+  document.getElementById('btnAddArea').hidden = false;
+  document.getElementById('btnSaveArea').hidden = true;
+  document.getElementById('btnCancelArea').hidden = true;
+  const svg = document.getElementById('schemaSvg');
+  if (svg) { svg.style.cursor = ''; svg.querySelectorAll('.drawing-tmp').forEach(e=>e.remove()); }
+}
+
+function renderDrawingTemp() {
+  const svg = document.getElementById('schemaSvg');
+  if (!svg || !svgScale.w) return;
+  svg.querySelectorAll('.drawing-tmp').forEach(e=>e.remove());
+
+  if (drawingPoints.length < 1) return;
+
+  // Draw dots
+  drawingPoints.forEach((p,i) => {
+    const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('cx', p[0]*svgScale.w/100);
+    c.setAttribute('cy', p[1]*svgScale.h/100);
+    c.setAttribute('r', '5');
+    c.setAttribute('fill', i===0?'#E53935':'#1565C0');
+    c.setAttribute('stroke','#fff');
+    c.setAttribute('stroke-width','1.5');
+    c.setAttribute('class','drawing-tmp');
+    c.style.pointerEvents='none';
+    svg.appendChild(c);
+  });
+
+  if (drawingPoints.length >= 2) {
+    const poly = document.createElementNS('http://www.w3.org/2000/svg','polygon');
+    const pts = drawingPoints.map(p=>`${p[0]*svgScale.w/100},${p[1]*svgScale.h/100}`).join(' ');
+    poly.setAttribute('points', pts);
+    poly.setAttribute('fill','rgba(21,101,192,0.15)');
+    poly.setAttribute('stroke','#1565C0');
+    poly.setAttribute('stroke-width','2');
+    poly.setAttribute('stroke-dasharray','5,3');
+    poly.setAttribute('class','drawing-tmp');
+    poly.style.pointerEvents='none';
+    svg.insertBefore(poly, svg.firstChild);
+  }
+}
+
+function saveDrawing() {
+  if (drawingPoints.length < 3) { toast('Отметьте минимум 3 точки','error'); return; }
+  // Open modal to assign room or create new
+  document.getElementById('drawAreaPoints').value = JSON.stringify(drawingPoints);
+  document.getElementById('daFloorId').value = curFloorId;
+  // Populate room select for existing rooms without area
+  const sel = document.getElementById('daRoomSel');
+  sel.innerHTML = '<option value="">— создать новую аудиторию —</option>' +
+    floorRooms.map(r=>`<option value="${r.id}">${r.number}${r.purpose?' — '+r.purpose:''}</option>`).join('');
+  om('mDrawArea');
+}
+
+async function saveAreaModal() {
+  const points = JSON.parse(document.getElementById('drawAreaPoints').value || '[]');
+  const floorId = document.getElementById('daFloorId').value;
+  const roomId  = document.getElementById('daRoomSel').value;
+
+  if (!curSchema?.id) { toast('Схема не найдена — перезагрузите этаж','error'); return; }
+  const schemaId = curSchema.id;
+
+  // Convert points array [[x,y],...] to coordinates object expected by API
+  // API expects CreateClickableAreaDto: { coordinates: { points: [[x,y],...] }, roomId: string }
+  const coordinatesPayload = { points };
+
+  if (roomId) {
+    // Existing room — create clickable area via /api/clickable-areas/schema/{schemaId}
+    const res = await req(`/api/clickable-areas/schema/${schemaId}`, {
+      method: 'POST',
+      headers: H(),
+      body: JSON.stringify({ coordinates: coordinatesPayload, roomId })
+    });
+    if (res.ok) { toast('Область сохранена','success'); cm('mDrawArea'); cancelDrawing(); await loadFloorRooms(floorId); }
+    else toast(res.data?.message||'Ошибка сохранения области','error');
+  } else {
+    // New room: first POST room, then create clickable area
+    const number   = document.getElementById('daRoomNum').value.trim();
+    const purpose  = document.getElementById('daRoomPurpose').value;
+    const capacity = parseInt(document.getElementById('daRoomCap').value);
+    const area     = parseFloat(document.getElementById('daRoomArea').value);
+    const description = document.getElementById('daRoomDesc').value.trim();
+    if (!number) { toast('Введите номер аудитории','error'); return; }
+
+    // Step 1: create room
+    const createBody = { number, floorId, purpose };
+    if (!isNaN(capacity) && capacity > 0) createBody.capacity = capacity;
+    if (!isNaN(area) && area > 0) createBody.area = area;
+    if (description) createBody.description = description;
+
+    const r1 = await req('/api/rooms', {method:'POST', headers:H(), body:JSON.stringify(createBody)});
+    if (!r1.ok) { toast(r1.data?.message||'Ошибка создания аудитории','error'); return; }
+
+    // Step 2: create clickable area linked to new room
+    const newRoomId = r1.data.id;
+    const r2 = await req(`/api/clickable-areas/schema/${schemaId}`, {
+      method: 'POST',
+      headers: H(),
+      body: JSON.stringify({ coordinates: coordinatesPayload, roomId: newRoomId })
+    });
+    if (r2.ok) {
+      toast(`Аудитория ${number} создана`,'success');
+      cm('mDrawArea'); cancelDrawing();
+      await loadFloorRooms(floorId);
+    } else {
+      // Room created but area failed
+      toast(`Аудитория ${number} создана (ошибка области: ${r2.data?.message||'неизвестно'})`, 'info');
+      cm('mDrawArea'); cancelDrawing(); await loadFloorRooms(floorId);
+    }
+  }
+}
+
+async function uploadFloorSchemaInline(input, floorId) {
+  const file = input.files[0]; if (!file) return;
+  const fd = new FormData(); fd.append('file',file);
+  const r = await fetch(`${API}/api/floor-schemas/upload/${floorId}`,{method:'POST',headers:authToken?{'Authorization':`Bearer ${authToken}`}:{},body:fd});
+  if (r.ok) { toast('Схема загружена','success'); loadFloor(floorId); }
+  else { const e=await r.json(); toast(e.message||'Ошибка','error'); }
+}
+
+async function deleteSchema(floorId) {
+  if (!confirm('Удалить схему этажа?')) return;
+  const res = await req(`/api/floor-schemas/floor/${floorId}`,{method:'DELETE',headers:H()});
+  if (res.ok) { toast('Схема удалена','success'); loadFloor(floorId); }
+  else toast(res.data.message||'Ошибка','error');
+}
+
+function toggleNewRoomFields() {
+  const sel = document.getElementById('daRoomSel');
+  document.getElementById('newRoomFields').style.display = sel.value ? 'none' : 'block';
+}
+
+function zoom(d) {
+  mapScale = Math.min(4, Math.max(.3, mapScale + d));
+  const el = document.getElementById('schemaTransform') || document.getElementById('floorImg');
+  if (el) el.style.transform = `scale(${mapScale})`;
+}
+
+async function searchRoom() {
+  const num = document.getElementById('roomSearch').value.trim();
+  if (!num) return;
+  const res = await req(`/api/rooms/number/${num}`,{headers:H()});
+  if (res.ok) showRoomPanelData(res.data);
+  else toast('Аудитория не найдена','error');
+}
+
+async function showRoomPanel(roomId) {
+  // highlight in list
+  document.querySelectorAll('.ritem').forEach(r=>r.classList.remove('on'));
+  document.getElementById('ri-'+roomId)?.classList.add('on');
+  const res = await req(`/api/rooms/${roomId}`,{headers:H()});
+  if (res.ok) showRoomPanelData(res.data);
+}
+
+function showRoomPanelData(room) {
+  curRoomData = room;
+  document.getElementById('rpNum').textContent = room.number;
+  document.getElementById('rpFloor').textContent    = room.floor?.floorNumber ?? '—';
+  document.getElementById('rpPurpose').textContent  = room.purpose || '—';
+  document.getElementById('rpCap').textContent      = room.capacity ? room.capacity+' чел.' : '—';
+  const aRow = document.getElementById('rpAreaRow');
+  if (room.area) { aRow.hidden=false; document.getElementById('rpArea').textContent=room.area+' м²'; } else aRow.hidden=true;
+  const dRow = document.getElementById('rpDescRow');
+  if (room.description) { dRow.hidden=false; document.getElementById('rpDesc').textContent=room.description; } else dRow.hidden=true;
+
+  // Equipment
+  const feats = room.features||[];
+  const eqw = document.getElementById('rpEqWrap');
+  if (feats.length) {
+    eqw.hidden=false;
+    document.getElementById('rpEqBody').innerHTML = feats.map(f=>`<tr><td>${f.featureName}</td><td>${f.quantity??1}</td></tr>`).join('');
+  } else eqw.hidden=true;
+
+  // Media
+  loadRoomMedia(room.id);
+  // Tickets in panel
+  loadPanelTickets(room.id);
+
+  // Show panel
+  switchPTab('rpBasic', document.querySelector('.rptab'));
+  const p = document.getElementById('rPanel');
+  p.classList.remove('hidden-panel');
+}
+
+function closePanel() {
+  document.getElementById('rPanel').classList.add('hidden-panel');
+  curRoomData = null;
+  document.querySelectorAll('.ritem').forEach(r=>r.classList.remove('on'));
+}
+
+function switchPTab(tabId, btn) {
+  document.querySelectorAll('#rpBasic,#rpTix').forEach(t=>t.hidden=true);
+  document.querySelectorAll('.rptab').forEach(b=>b.classList.remove('on'));
+  document.getElementById(tabId).hidden=false;
+  if (btn) btn.classList.add('on');
+}
+
+function toggleEqDetail() {
+  const t = document.getElementById('rpEqTbl');
+  t.style.display = t.style.display==='none'?'':'none';
+}
+
+async function loadRoomMedia(roomId) {
+  const mw = document.getElementById('rpMediaWrap');
+  const res = await req(`/api/room-media/room/${roomId}`, {headers: H()});
+  if (!res.ok || !res.data?.length) { 
+    mw.hidden = true; 
+    return; 
+  }
+  
+  mw.hidden = false;
+  curMediaList = res.data;
+  curMediaIdx = 0;
+  
+  // Преобразуем URL для всех медиафайлов
+  curMediaList = curMediaList.map(m => ({
+    ...m,
+    url: m.url && !m.url.startsWith('http') ? API + m.url : m.url
+  }));
+  
+  renderMC();
+}
+
+function renderMC() {
+  if (!curMediaList.length) return;
+  
+  const currentMedia = curMediaList[curMediaIdx];
+  let imageUrl = currentMedia.url;
+  if (imageUrl && !imageUrl.startsWith('http')) {
+    imageUrl = API + imageUrl;
+  }
+  
+  const mainImg = document.getElementById('rpMainImg');
+  const mcMain = document.querySelector('.mc-main');
+  
+  // Для панорамы показываем специальную иконку вместо обычного img
+  if (currentMedia.mediaType === 'panorama') {
+    // Скрываем обычное изображение, показываем кнопку просмотра
+    mainImg.style.display = 'none';
+    
+    // Добавляем кнопку просмотра панорамы если её нет
+    let viewBtn = document.getElementById('viewPanoramaBtn');
+    if (!viewBtn) {
+      viewBtn = document.createElement('button');
+      viewBtn.id = 'viewPanoramaBtn';
+      viewBtn.className = 'btn bp';
+      viewBtn.style.position = 'absolute';
+      viewBtn.style.top = '50%';
+      viewBtn.style.left = '50%';
+      viewBtn.style.transform = 'translate(-50%, -50%)';
+      viewBtn.style.zIndex = '10';
+      viewBtn.innerHTML = '🌍 Смотреть панораму 360°';
+      viewBtn.onclick = () => openPanoramaViewer(currentMedia.id, curRoomData?.number || '');
+      mcMain.appendChild(viewBtn);
+    }
+    
+    // Показываем превью (можно использовать миниатюру)
+    if (currentMedia.thumbnailUrl) {
+      let thumbUrl = currentMedia.thumbnailUrl;
+      if (thumbUrl && !thumbUrl.startsWith('http')) thumbUrl = API + thumbUrl;
+      mainImg.src = thumbUrl;
+      mainImg.style.display = 'block';
+      mainImg.style.opacity = '0.5';
+    } else {
+      mainImg.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Ctext x="50" y="50" text-anchor="middle" dominant-baseline="middle" fill="%23999" font-size="14"%3E360° Панорама%3C/text%3E%3C/svg%3E';
+      mainImg.style.display = 'block';
+    }
+  } else {
+    // Обычное фото
+    mainImg.style.display = 'block';
+    const viewBtn = document.getElementById('viewPanoramaBtn');
+    if (viewBtn) viewBtn.remove();
+    mainImg.style.opacity = '1';
+    mainImg.src = imageUrl;
+  }
+  
+  document.getElementById('rpThumbs').innerHTML = curMediaList.map((m, i) => {
+    let thumbUrl = m.url;
+    if (thumbUrl && !thumbUrl.startsWith('http')) {
+      thumbUrl = API + thumbUrl;
+    }
+    const isPanorama = m.mediaType === 'panorama';
+    return `
+      <div style="position: relative; display: inline-block;">
+        <img class="mc-th${i === curMediaIdx ? ' on' : ''}" src="${thumbUrl}" onclick="setMed(${i})" onerror="this.style.display='none'" style="cursor: pointer;">
+        ${isPanorama ? '<div style="position: absolute; bottom: 2px; right: 2px; background: rgba(0,0,0,0.6); color: white; font-size: 10px; padding: 2px 4px; border-radius: 4px;">360°</div>' : ''}
+      </div>
+    `;
+  }).join('');
+}
+function setMed(i) { 
+  curMediaIdx = i;
+  // Удаляем старую кнопку просмотра панорамы
+  const oldBtn = document.getElementById('viewPanoramaBtn');
+  if (oldBtn) oldBtn.remove();
+  renderMC(); 
+}
+function mediaNv(d) { curMediaIdx=(curMediaIdx+d+curMediaList.length)%curMediaList.length; renderMC(); }
+
+async function loadPanelTickets(roomId) {
+  const el = document.getElementById('rpTixList');
+  el.textContent='Загрузка...';
+  const res = await req(`/api/tickets/room/${roomId}`,{headers:H()});
+  if (!res.ok) { el.textContent='Ошибка'; return; }
+  const list = [...(res.data?.active||[]),...(res.data?.archive||[])];
+  if (!list.length) { el.innerHTML='<span style="color:var(--text2)">Заявок по этой аудитории нет</span>'; return; }
+  el.innerHTML = list.map(t=>`
+    <div style="padding:9px 0;border-bottom:1px solid var(--border)">
+      <div style="display:flex;justify-content:space-between;margin-bottom:3px">
+        <span style="font-weight:600;color:var(--blue)">#${t.id}</span>
+        <span class="st st-${t.status}">${stLabel(t.status)}</span>
+      </div>
+      <div style="font-size:12px">${t.description||'—'}</div>
+      <div style="font-size:11px;color:var(--text2);margin-top:3px">${t.reporterEmail||''} · ${fmtDate(t.createdAt)}</div>
+    </div>
+  `).join('');
+}
+
+/* ─ Edit Room from panel ─ */
+function openEditRoom() {
+  if (!curRoomData) return;
+  const r = curRoomData;
+  curEditRoomId = r.id; curFeatures = r.features||[];
+  document.getElementById('eTitleRoom').textContent = `Аудитория ${r.number}`;
+  document.getElementById('eRoomId').value = r.id;
+  document.getElementById('eRNum').value   = r.number||'';
+  document.getElementById('eRFlr').value   = r.floor?.floorNumber??'';
+  document.getElementById('eRPurpose').value = r.purpose||'';
+  document.getElementById('eRCap').value   = r.capacity||'';
+  document.getElementById('eRArea').value  = r.area||'';
+  document.getElementById('eRDesc').value  = r.description||'';
+  updateFeatPrev();
+  loadEMedia(r.id);
+  om('mEditRoom');
+}
+
+async function saveRoomEdit() {
+  const id = curEditRoomId;
+  const cap = parseInt(document.getElementById('eRCap').value);
+  const area = parseFloat(document.getElementById('eRArea').value);
+  
+  // Очищаем features перед отправкой - удаляем лишние поля
+  const cleanFeatures = curFeatures.map(f => ({
+    featureName: f.featureName,
+    featureValue: f.featureValue || null,
+    quantity: f.quantity || 1,
+    technicalSpecs: f.technicalSpecs || null
+  }));
+  
+  const body = {
+    number: document.getElementById('eRNum').value,
+    purpose: document.getElementById('eRPurpose').value,
+    capacity: isNaN(cap) ? null : cap,
+    area: isNaN(area) ? null : area,
+    description: document.getElementById('eRDesc').value || null,
+    features: cleanFeatures  // Используем очищенный массив
+  };
+  
+  const res = await req(`/api/rooms/${id}`, {
+    method: 'PATCH',
+    headers: H(),
+    body: JSON.stringify(body)
+  });
+  
+  if (res.ok) {
+    toast('Аудитория обновлена', 'success');
+    cm('mEditRoom');
+    const r2 = await req(`/api/rooms/${id}`, {headers: H()});
+    if (r2.ok) showRoomPanelData(r2.data);
+    // reload rooms list
+    loadFloorRooms(viewerFloors[curFloorIdx]?.id);
+  } else {
+    toast(res.data.message || 'Ошибка', 'error');
+  }
+}
+
+async function deleteRoomModal() {
+  if (!confirm('Удалить аудиторию?')) return;
+  const id = curEditRoomId;
+  const res = await req(`/api/rooms/${id}`,{method:'DELETE',headers:H()});
+  if (res.ok) { toast('Удалено','success'); cm('mEditRoom'); closePanel(); loadFloorRooms(viewerFloors[curFloorIdx]?.id); }
+  else toast(res.data.message||'Ошибка','error');
+}
+
+/* ─ Features ─ */
+function updateFeatPrev() {
+  document.getElementById('eFeatPrev').textContent = curFeatures.length
+    ? curFeatures.map(f=>`${f.featureName}: ${f.featureValue||''} × ${f.quantity||1}`).join('\n')
+    : 'Нет данных';
+}
+function openFeatModal() {
+  const c = document.getElementById('featList'); c.innerHTML='';
+  if (!curFeatures.length) addFRow(); else curFeatures.forEach((f,i)=>addFRow(i,f));
+  om('mFeatures');
+}
+function addFRow(idx=null,f=null) {
+  const id = Date.now()+Math.random();
+  const d = document.createElement('div');
+  d.className='frow'; d.id=`fr-${id}`;
+  d.innerHTML=`
+    <input class="finp fn" type="text" placeholder="Название" value="${f?.featureName||''}">
+    <input class="finp fv" type="text" placeholder="Значение" value="${f?.featureValue||''}">
+    <input class="finp fq" type="number" placeholder="1" value="${f?.quantity||1}">
+    <input class="finp fs" type="text" placeholder="Тех. характеристики" value="${f?.technicalSpecs||''}">
+    <button onclick="document.getElementById('fr-${id}').remove()" style="background:var(--red-bg);color:var(--red);border:none;border-radius:7px;width:32px;height:32px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center">×</button>
+  `;
+  document.getElementById('featList').appendChild(d);
+}
+function saveFeats() {
+  curFeatures=[...document.querySelectorAll('#featList .frow')].map(r=>({
+    featureName:r.querySelector('.fn').value.trim(),
+    featureValue:r.querySelector('.fv').value||null,
+    quantity:parseInt(r.querySelector('.fq').value)||1,
+    technicalSpecs:r.querySelector('.fs').value||null
+  })).filter(f=>f.featureName);
+  updateFeatPrev(); cm('mFeatures');
+}
+
+/* ─ Edit Media ─ */
+async function loadEMedia(roomId) {
+  const g = document.getElementById('eMediaGrid');
+  g.innerHTML = '<span style="font-size:12px;color:var(--text2)">Загрузка...</span>';
+  const res = await req(`/api/room-media/room/${roomId}`, {headers: H()});
+  if (!res.ok || !res.data?.length) { 
+    g.innerHTML = '<span style="font-size:12px;color:var(--text2)">Нет медиафайлов</span>'; 
+    return; 
+  }
+  
+  g.innerHTML = res.data.map(m => {
+    let mediaUrl = m.url;
+    if (mediaUrl && !mediaUrl.startsWith('http')) {
+      mediaUrl = API + mediaUrl;
+    }
+    return `
+      <div class="mi">
+        <img src="${mediaUrl}" onerror="this.src='https://placehold.co/96x96?text=?'">
+        <button class="midel" onclick="delEMedia('${m.id}')">×</button>
+        <div class="mitag">${m.mediaType === 'panorama' ? '360°' : 'Фото'}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+async function openPanoramaViewer(mediaId, roomNumber) {
+  try {
+    // Получаем URL панорамы
+    const res = await req(`/api/room-media/${mediaId}`, {headers: H()});
+    if (!res.ok) throw new Error('Не удалось загрузить панораму');
+    
+    const media = res.data;
+    let panoramaUrl = media.url;
+    
+    if (panoramaUrl && !panoramaUrl.startsWith('http')) {
+      panoramaUrl = API + panoramaUrl;
+    }
+    
+    document.getElementById('panoramaTitle').textContent = `Панорама 360° - Аудитория ${roomNumber}`;
+    om('mPanorama');
+    
+    // Инициализируем просмотрщик после открытия модального окна
+    setTimeout(() => {
+      initPannellumViewer(panoramaUrl);
+    }, 100);
+    
+  } catch (error) {
+    toast('Ошибка загрузки панорамы: ' + error.message, 'error');
+  }
+}
+
+// Инициализация Pannellum просмотрщика
+function initPannellumViewer(imageUrl) {
+  const container = document.getElementById('panoramaViewer');
+  
+  // Удаляем старый экземпляр если есть
+  if (pannellumViewer) {
+    pannellumViewer.destroy();
+    pannellumViewer = null;
+  }
+  
+  // Очищаем контейнер
+  container.innerHTML = '';
+  
+  try {
+    // Создаем новый просмотрщик
+    pannellumViewer = pannellum.viewer('panoramaViewer', {
+      type: 'equirectangular',
+      panorama: imageUrl,
+      autoLoad: true,
+      showZoomCtrl: true,
+      showFullscreenCtrl: true,
+      compass: false,
+      mouseZoom: true,
+      draggable: true,
+      default: {
+        pitch: 0,
+        yaw: 0,
+        hfov: 100
+      },
+      hotSpots: []
+    });
+    
+  } catch (error) {
+    console.error('Failed to init pannellum:', error);
+    container.innerHTML = `
+      <div style="display: flex; align-items: center; justify-content: center; height: 100%; background: var(--bg); border-radius: 8px; color: var(--text2); flex-direction: column;">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        <p style="margin-top: 12px;">Не удалось загрузить панораму</p>
+        <p style="font-size: 12px; margin-top: 8px;">Убедитесь, что изображение имеет формат 360° (соотношение 2:1)</p>
+      </div>
+    `;
+  }
+}
+
+function closePanoramaViewer() {
+  if (pannellumViewer) {
+    pannellumViewer.destroy();
+    pannellumViewer = null;
+  }
+  cm('mPanorama');
+}
+
+// Инициализация просмотрщика 360°
+function initPanoramaViewer(imageUrl) {
+  const container = document.getElementById('panoramaViewer');
+  
+  // Удаляем старый экземпляр если есть
+  if (psvInstance) {
+    psvInstance.destroy();
+    psvInstance = null;
+  }
+  
+  // Очищаем контейнер
+  container.innerHTML = '';
+  
+  try {
+    // Создаем новый просмотрщик
+    psvInstance = new PhotoSphereViewer.Viewer({
+      container: container,
+      panorama: imageUrl,
+      caption: 'Панорама аудитории 360°',
+      loadingImg: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Ccircle cx="50" cy="50" r="45" stroke="%231565C0" stroke-width="5" fill="none" stroke-dasharray="70 200" stroke-linecap="round" transform="rotate(0 50 50)"%3E%3CanimateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="1.5s" repeatCount="indefinite"/%3E%3C/line%3E%3C/svg%3E',
+      navbar: [
+        {
+          id: 'zoom',
+          content: '🔍',
+          title: 'Zoom',
+          onClick: function() { /* handled by lib */ }
+        },
+        {
+          id: 'fullscreen',
+          content: '⛶',
+          title: 'Fullscreen'
+        },
+        {
+          id: 'reset',
+          content: '⟳',
+          title: 'Reset'
+        }
+      ],
+      defaultZoomLvl: 0,
+      mousewheel: true,
+      touchmove: true,
+      animSpeed: '2rpm',
+      fisheye: false
+    });
+    
+    // Обработка ошибок загрузки
+    psvInstance.on('error', (e) => {
+      console.error('Panorama error:', e);
+      toast('Ошибка загрузки панорамы. Возможно, изображение не является панорамой 360°', 'error');
+    });
+    
+  } catch (error) {
+    console.error('Failed to init panorama viewer:', error);
+    container.innerHTML = `
+      <div style="display: flex; align-items: center; justify-content: center; height: 100%; background: var(--bg); border-radius: 8px; color: var(--text2);">
+        <div style="text-align: center;">
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          <p style="margin-top: 12px;">Не удалось загрузить панораму<br><span style="font-size: 12px;">Проверьте формат файла (должен быть эквидистантный JPEG)</span></p>
+        </div>
+      </div>
+    `;
+  }
+}
+
+function closePanoramaViewer() {
+  if (psvInstance) {
+    psvInstance.destroy();
+    psvInstance = null;
+  }
+  cm('mPanorama');
+}
+async function uploadEMedia() {
+  const file = document.getElementById('eMediaFile').files[0];
+  const type = document.getElementById('eMediaType').value;
+  if (!file || !curEditRoomId) {
+    toast('Выберите файл', 'error');
+    return;
+  }
+  
+  const fd = new FormData();
+  fd.append('file', file);
+  
+  // Используем правильные эндпоинты
+  const ep = type === 'photo' 
+    ? `/api/room-media/upload/photo/${curEditRoomId}`
+    : `/api/room-media/upload/panorama/${curEditRoomId}`;
+  
+  try {
+    const r = await fetch(API + ep, {
+      method: 'POST',
+      headers: authToken ? {'Authorization': `Bearer ${authToken}`} : {},
+      body: fd
+    });
+    
+    if (r.ok) {
+      toast('Загружено', 'success');
+      await loadEMedia(curEditRoomId);
+      document.getElementById('eMediaFile').value = '';
+    } else {
+      const e = await r.json();
+      toast(e.message || 'Ошибка загрузки', 'error');
+    }
+  } catch (error) {
+    toast('Ошибка при загрузке файла', 'error');
+  }
+}
+function getMediaUrl(mediaItem) {
+  if (!mediaItem || !mediaItem.url) return '';
+  if (mediaItem.url.startsWith('http')) return mediaItem.url;
+  return API + mediaItem.url;
+}
+
+function getMediaUrl(mediaItem) {
+  if (!mediaItem) return '';
+  
+  // Если это панорама и есть специальный эндпоинт
+  if (mediaItem.mediaType === 'panorama' && mediaItem.roomId) {
+    return `${API}/api/room-media/room/${mediaItem.roomId}/panorama`;
+  }
+  
+  // Обычный URL
+  if (mediaItem.url && mediaItem.url.startsWith('http')) {
+    return mediaItem.url;
+  }
+  
+  return API + (mediaItem.url || '');
+}
+async function delEMedia(id) {
+  if(!confirm('Удалить файл?'))return;
+  const res=await req(`/api/room-media/${id}`,{method:'DELETE',headers:H()});
+  if(res.ok){toast('Удалено','success');loadEMedia(curEditRoomId);}
+  else toast('Ошибка','error');
+}
+
+/* ═══════════════════ TICKETS ═══════════════════ */
+function toggleFPanel() { const p=document.getElementById('tFilterPanel');p.hidden=!p.hidden; }
+function clearTFilters() {
+  document.getElementById('fRoomSel').value='';
+  document.getElementById('fStatus').value='';
+  loadTickets();
+}
+
+async function loadRoomsForFilter() {
+  const res = await req('/api/rooms', {headers:H()});
+  if (!res.ok) return;
+  
+  // ✅ Извлекаем массив из пагинации
+  let rooms = [];
+  if (Array.isArray(res.data)) {
+    rooms = res.data;
+  } else if (res.data && Array.isArray(res.data.items)) {
+    rooms = res.data.items;
+  }
+  
+  allRooms = rooms;
+  const sel = document.getElementById('fRoomSel');
+  sel.innerHTML = '<option value="">Все аудитории</option>' +
+    rooms.map(r => `<option value="${r.id}">${r.number}${r.purpose ? ` — ${r.purpose}` : ''}</option>`).join('');
+}
+
+async function loadTickets() {
+  let res;
+  if (curTTab === 'my') {
+    res = await req('/api/tickets/my', {headers:H()});
+    renderTickets(res.ok ? res.data : []);
+    return;
+  }
+
+  const roomId = document.getElementById('fRoomSel')?.value || '';
+  const status = document.getElementById('fStatus')?.value || '';
+
+  if (roomId) {
+    // Use room-specific endpoint which returns {active:[], archive:[]}
+    res = await req(`/api/tickets/room/${roomId}`, {headers:H()});
+    if (res.ok) {
+      let list = [...(res.data?.active||[]), ...(res.data?.archive||[])];
+      if (status) list = list.filter(t => t.status === status);
+      renderTickets(list);
+    } else renderTickets([]);
+  } else {
+    // General endpoint supports statuses filter
+    const params = [];
+    if (status) params.push(`statuses=${status}`);
+    const q = params.length ? '?' + params.join('&') : '';
+    res = await req('/api/tickets' + q, {headers:H()});
+    renderTickets(res.ok ? res.data : []);
+  }
+}
+
+function renderTickets(list) {
+  const tb = document.getElementById('tBody');
+  if (!Array.isArray(list)||!list.length) {
+    tb.innerHTML=`<tr><td colspan="7" style="text-align:center;color:var(--text2);padding:32px">Заявок не найдено</td></tr>`; return;
+  }
+  tb.innerHTML=list.map(t=>`
+    <tr>
+      <td style="font-weight:600;color:var(--blue);font-size:13px">${t.id}</td>
+      <td style="font-weight:500">${t.room?.number||t.roomNumber||'—'}</td>
+      <td>
+        <div style="font-size:11px;color:var(--text2);margin-bottom:2px">${t.reporterEmail||''}</div>
+        <div style="font-size:13px">${t.description||''}</div>
+      </td>
+      <td><span class="st st-${t.status}">${stLabel(t.status)}</span></td>
+      <td style="font-size:13px">${t.assignee?.fullName||'—'}</td>
+      <td style="font-size:12px;color:var(--text2)">${fmtDate(t.createdAt)}</td>
+      <td>
+        <div class="amenu">
+          <button class="btn bic bs" onclick="toggleAMenu(event,'am-${t.id}')">⋮</button>
+          <div class="adrop" id="am-${t.id}">
+            <button class="aitem" onclick="openTicketDetail('${t.id}');closeMenus()">Открыть</button>
+            <button class="aitem" onclick="quickTake('${t.id}')">Взять в работу</button>
+            <button class="aitem danger" onclick="quickClose('${t.id}')">Закрыть</button>
+          </div>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+  // badge
+  const open = list.filter(t=>t.status!=='closed').length;
+  const b = document.getElementById('tBadge'); b.hidden=!open; b.textContent=open;
+}
+
+function switchTTab(tab,btn) {
+  curTTab=tab;
+  document.querySelectorAll('.tktab').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on'); loadTickets();
+}
+
+function toggleAMenu(e,id) { e.stopPropagation(); closeMenus(); document.getElementById(id)?.classList.add('open'); }
+function closeMenus() { document.querySelectorAll('.adrop').forEach(d=>d.classList.remove('open')); }
+document.addEventListener('click', closeMenus);
+
+async function openTicketDetail(id) {
+  const res = await req(`/api/tickets/${id}`,{headers:H()});
+  if (!res.ok){toast('Ошибка','error');return;}
+  const t = res.data;
+  document.getElementById('tDTitle').textContent = `Заявка #${t.id}`;
+  document.getElementById('tDId').value = t.id;
+  document.getElementById('tDStatus').value = t.status||'new';
+  document.getElementById('tDBody').innerHTML=`
+    <div class="irow"><span class="ilbl">Аудитория</span><span class="ival">${t.room?.number||t.roomNumber||'—'}</span></div>
+    <div class="irow"><span class="ilbl">Email заявителя</span><span class="ival">${t.reporterEmail||'—'}</span></div>
+    <div class="irow"><span class="ilbl">Статус</span><span class="ival"><span class="st st-${t.status}">${stLabel(t.status)}</span></span></div>
+    <div class="irow"><span class="ilbl">Исполнитель</span><span class="ival">${t.assignee?.fullName||'—'}</span></div>
+    <div class="irow"><span class="ilbl">Дата подачи</span><span class="ival">${fmtDate(t.createdAt)}</span></div>
+    <div style="margin-top:12px;background:var(--bg);padding:11px 14px;border-radius:8px;font-size:13px;line-height:1.6">${t.description||'—'}</div>
+  `;
+  om('mTicket');
+}
+
+async function createTicketExt() {
+  const roomNumber=document.getElementById('tRoom').value;
+  const description=document.getElementById('tDesc').value;
+  const reporterEmail=document.getElementById('tEmail').value;
+  if(!roomNumber||!description||!reporterEmail){toast('Заполните все поля','error');return;}
+  const res=await req('/api/tickets/external',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({roomNumber,description,reporterEmail})});
+  if(res.ok){toast(`Заявка #${res.data.id} создана`,'success');cm('mAddTicket');document.getElementById('tRoom').value='';document.getElementById('tDesc').value='';document.getElementById('tEmail').value='';loadTickets();}
+  else toast(res.data.message||'Ошибка','error');
+}
+
+async function updTStatus() {
+  const id=document.getElementById('tDId').value;
+  const status=document.getElementById('tDStatus').value;
+  const res=await req(`/api/tickets/${id}/status`,{method:'PATCH',headers:H(),body:JSON.stringify({status})});
+  if(res.ok){toast('Статус изменён','success');cm('mTicket');loadTickets();}
+  else toast(res.data.message||'Ошибка','error');
+}
+async function assignT() {
+  const id=document.getElementById('tDId').value;
+  const userId=document.getElementById('tDAssign').value;
+  if(!userId){toast('Введите ID исполнителя','error');return;}
+  const res=await req(`/api/tickets/${id}/assign`,{method:'PATCH',headers:H(),body:JSON.stringify({userId})});
+  if(res.ok){toast('Исполнитель назначен','success');cm('mTicket');loadTickets();}
+  else toast(res.data.message||'Ошибка','error');
+}
+async function takeT() {
+  const id=document.getElementById('tDId').value;
+  const res=await req(`/api/tickets/${id}/take`,{method:'PATCH',headers:H()});
+  if(res.ok){toast('Взято в работу','success');cm('mTicket');loadTickets();}
+  else toast(res.data.message||'Ошибка','error');
+}
+async function closeT() {
+  const id=document.getElementById('tDId').value;
+  const res=await req(`/api/tickets/${id}/close`,{method:'PATCH',headers:H()});
+  if(res.ok){toast('Заявка закрыта','success');cm('mTicket');loadTickets();}
+  else toast(res.data.message||'Ошибка','error');
+}
+async function quickTake(id) {
+  const res=await req(`/api/tickets/${id}/take`,{method:'PATCH',headers:H()});
+  if(res.ok){toast('Взято в работу','success');loadTickets();}
+  else toast(res.data.message||'Ошибка','error');
+}
+async function quickClose(id) {
+  if(!confirm('Закрыть заявку?'))return;
+  const res=await req(`/api/tickets/${id}/close`,{method:'PATCH',headers:H()});
+  if(res.ok){toast('Заявка закрыта','success');loadTickets();}
+  else toast(res.data.message||'Ошибка','error');
+}
+
+// Yandex Forms sync
+async function pollYandex() {
+  const res=await req('/api/tickets/poll-manual',{method:'POST',headers:H()});
+  if(res.ok){
+    toast(`Синхронизировано: обработано ${res.data.processed}, создано ${res.data.created}${res.data.errors?' ошибок '+res.data.errors:''}`, 'success');
+    loadTickets();
+  } else toast(res.data.message||'Ошибка синхронизации','error');
+}
+
+/* ═══════════════════ USERS ═══════════════════ */
+async function loadUsers() {
+  const res=await req('/api/users',{headers:H()});
+  const tb=document.getElementById('uBody');
+  if(!res.ok||!res.data?.length){tb.innerHTML='<tr><td colspan="4" style="text-align:center;padding:24px;color:var(--text2)">Нет данных</td></tr>';return;}
+  tb.innerHTML=res.data.map(u=>`
+    <tr>
+      <td style="font-weight:500">${u.fullName||'—'}</td>
+      <td style="color:var(--text2)">${u.email||'—'}</td>
+      <td><span class="st st-new" style="font-size:11px">${u.role||'—'}</span></td>
+      <td>
+        <div style="display:flex;gap:6px">
+          <select onchange="updateUserRole('${u.id}',this.value)" style="height:28px;font-size:12px;padding:0 8px;border-radius:6px;border:1px solid var(--border)">
+            <option value="user"${u.role==='user'?' selected':''}>user</option>
+            <option value="admin"${u.role==='admin'?' selected':''}>admin</option>
+            <option value="super_admin"${u.role==='super_admin'?' selected':''}>super_admin</option>
+          </select>
+          <button class="btn bd bsm" onclick="deleteUser('${u.id}')">Удалить</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+async function addUser() {
+  const email=document.getElementById('nuEmail').value;
+  const fullName=document.getElementById('nuName').value;
+  const role=document.getElementById('nuRole').value;
+  const res=await req('/api/users',{method:'POST',headers:H(),body:JSON.stringify({email,fullName,role})});
+  if(res.ok){toast('Пользователь добавлен','success');loadUsers();}
+  else toast(res.data.message||'Ошибка','error');
+}
+async function updateUserRole(id,role) {
+  const res=await req(`/api/users/${id}/role`,{method:'PATCH',headers:H(),body:JSON.stringify({role})});
+  if(res.ok) toast('Роль обновлена','success');
+  else toast(res.data.message||'Ошибка','error');
+}
+async function deleteUser(id) {
+  if(!confirm('Удалить пользователя?'))return;
+  const res=await req(`/api/users/${id}`,{method:'DELETE',headers:H()});
+  if(res.ok){toast('Удалён','success');loadUsers();}
+  else toast(res.data.message||'Ошибка','error');
+}
+async function searchLdap() {
+  const q=document.getElementById('ldapQ').value;
+  const res=await req(`/api/users/ldap/search?q=${encodeURIComponent(q)}`,{headers:H()});
+  const el=document.getElementById('ldapRes');
+  el.hidden=false;
+  if(!res.ok||!res.data?.length){el.innerHTML='<div style="padding:10px;color:var(--text2);font-size:13px">Ничего не найдено</div>';return;}
+  el.innerHTML=`<div style="margin-top:10px" class="tw"><table><thead><tr><th>ФИО</th><th>Email</th><th>Логин</th><th></th></tr></thead><tbody>
+    ${res.data.map(u=>`<tr><td>${u.fullName||u.cn||'—'}</td><td>${u.email||'—'}</td><td>${u.login||u.uid||'—'}</td>
+    <td><button class="btn bg bsm" onclick="addLdapUser('${escQ(u.email||'')}','${escQ(u.fullName||u.cn||'')}')">+ Добавить</button></td></tr>`).join('')}
+  </tbody></table></div>`;
+}
+async function addLdapUser(email,fullName) {
+  const res=await req('/api/users',{method:'POST',headers:H(),body:JSON.stringify({email,fullName,role:'user'})});
+  if(res.ok){toast(`${fullName} добавлен`,'success');loadUsers();}
+  else toast(res.data.message||'Ошибка','error');
+}
+
+/* ═══════════════════ LOGS ═══════════════════ */
+async function getAllLogs() {
+  const res=await req('/api/logs',{headers:H()});
+  renderLogs(res.ok?res.data:[]);
+}
+async function getLogsByUser() {
+  const id=document.getElementById('lUID').value;
+  if(!id){toast('Введите ID','error');return;}
+  const res=await req(`/api/logs/user/${id}`,{headers:H()});
+  renderLogs(res.ok?res.data:[]);
+}
+async function getLogsByTarget() {
+  const id=document.getElementById('lTID').value;
+  const type=document.getElementById('lTType').value;
+  if(!id||!type){toast('Заполните оба поля','error');return;}
+  const res=await req(`/api/logs/target/${id}/${type}`,{headers:H()});
+  renderLogs(res.ok?res.data:[]);
+}
+function renderLogs(list) {
+  const el=document.getElementById('logsTable');
+  if(!Array.isArray(list)||!list.length){el.innerHTML='<div style="padding:20px;color:var(--text2);text-align:center;font-size:13px">Логов не найдено</div>';return;}
+  el.innerHTML=`<div class="tw"><table>
+    <thead><tr><th>Дата</th><th>Пользователь</th><th>Действие</th><th>Объект</th></tr></thead>
+    <tbody>${list.map(l=>`<tr>
+      <td style="font-size:12px;color:var(--text2);white-space:nowrap">${fmtDate(l.createdAt)}</td>
+      <td>${l.user?.fullName||l.userId||'—'}</td>
+      <td style="font-weight:500">${l.action||'—'}</td>
+      <td style="font-size:12px;color:var(--text2)">${l.targetType||''} ${l.targetId||''}</td>
+    </tr>`).join('')}</tbody>
+  </table></div>`;
+}
+
+/* ═══════════════════ ROOM FILTER ═══════════════════ */
+let allFloorRoomsCache = []; // cache of all rooms for current floor (unfiltered)
+
+function toggleRoomFilter() {
+  const p = document.getElementById('roomFilterPanel');
+  p.hidden = !p.hidden;
+  if (!p.hidden) loadFeatureTypes();
+}
+
+function toggleRfSec(bodyId, chvId) {
+  const body = document.getElementById(bodyId);
+  const chv  = document.getElementById(chvId);
+  const open = body.style.display !== 'none';
+  body.style.display = open ? 'none' : '';
+  if (chv) chv.style.transform = open ? 'rotate(0deg)' : 'rotate(180deg)';
+}
+
+// Load unique feature names from rooms on this floor
+async function loadFeatureTypes() {
+  const grid = document.getElementById('rfFeatsGrid');
+  const names = new Set();
+  
+  if (Array.isArray(allFloorRoomsCache)) {
+    allFloorRoomsCache.forEach(r => {
+      if (r.features && Array.isArray(r.features)) {
+        r.features.forEach(f => { 
+          if (f.featureName) names.add(f.featureName); 
+        });
+      }
+    });
+  }
+
+  if (!names.size) {
+    // fallback: fetch from API
+    const res = await req('/api/rooms', {headers:H()});
+    if (res.ok) {
+      // ✅ Исправление: проверяем, есть ли items (пагинация)
+      let rooms = [];
+      if (Array.isArray(res.data)) {
+        rooms = res.data;
+      } else if (res.data && Array.isArray(res.data.items)) {
+        rooms = res.data.items;  // 👈 Извлекаем массив из пагинации
+      }
+      
+      rooms.forEach(r => {
+        if (r.features && Array.isArray(r.features)) {
+          r.features.forEach(f => { 
+            if (f.featureName) names.add(f.featureName); 
+          });
+        }
+      });
+    }
+  }
+
+  if (!names.size) { 
+    grid.innerHTML = '<span style="font-size:12px;color:var(--text2)">Нет данных об оснащении</span>'; 
+    return; 
+  }
+
+  grid.innerHTML = [...names].map(name => `
+    <label class="rfcheck">
+      <input type="checkbox" data-feat="${name.replace(/"/g, '&quot;')}"> ${name}
+      <input type="number" data-feat-qty="${name.replace(/"/g, '&quot;')}" placeholder="От 0" min="0" style="margin-left:auto; width:70px">
+    </label>
+  `).join('');
+}
+
+function applyRoomFilter() {
+  // Collect purposes
+  const purposes = [...document.querySelectorAll('#rfPurposeBody input[type=checkbox]:checked')].map(c => c.value);
+
+  // Collect features: [{name, minQty}]
+  const feats = [...document.querySelectorAll('#rfFeatsGrid input[type=checkbox]:checked')].map(c => ({
+    name: c.dataset.feat,
+    minQty: parseInt(document.querySelector(`input[data-feat-qty="${c.dataset.feat}"]`)?.value) || 0
+  }));
+
+  // Capacity
+  const capFrom = parseInt(document.getElementById('rfCapFrom').value) || 0;
+  const capTo   = parseInt(document.getElementById('rfCapTo').value)   || Infinity;
+
+  // Filter
+  let filtered = allFloorRoomsCache;
+
+  if (purposes.length) filtered = filtered.filter(r => purposes.includes(r.purpose));
+
+  if (feats.length) filtered = filtered.filter(r => {
+    return feats.every(f => {
+      const feat = (r.features||[]).find(rf => rf.featureName === f.name);
+      return feat && (feat.quantity||1) >= f.minQty;
+    });
+  });
+
+  if (capFrom > 0 || capTo < Infinity) {
+    filtered = filtered.filter(r => {
+      const cap = r.capacity || 0;
+      return cap >= capFrom && cap <= capTo;
+    });
+  }
+
+  // Count active filters
+  const activeCount = purposes.length + feats.length + (capFrom > 0 ? 1 : 0) + (capTo < Infinity ? 1 : 0);
+  const badge = document.getElementById('roomFilterBadge');
+  badge.hidden = !activeCount;
+  badge.textContent = activeCount;
+
+  renderRoomsList(filtered);
+  toggleRoomFilter();
+}
+
+function resetRoomFilter() {
+  // Uncheck all
+  document.querySelectorAll('#rfPurposeBody input[type=checkbox]').forEach(c => c.checked = false);
+  document.querySelectorAll('#rfFeatsGrid input[type=checkbox]').forEach(c => c.checked = false);
+  document.querySelectorAll('#rfFeatsGrid input[type=number]').forEach(i => i.value = '');
+  document.getElementById('rfCapFrom').value = '';
+  document.getElementById('rfCapTo').value = '';
+  document.getElementById('roomFilterBadge').hidden = true;
+  renderRoomsList(allFloorRoomsCache);
+  toggleRoomFilter();
+}
+
+// Separate render so we can call it from filter without re-fetching
+function renderRoomsList(rooms) {
+  const wrap = document.getElementById('roomsListWrap');
+  const list = document.getElementById('roomsList');
+  if (!rooms?.length) { wrap.hidden = true; return; }
+  wrap.hidden = false;
+  list.innerHTML = rooms.map(r => `
+    <div class="ritem" id="ri-${r.id}" onclick="showRoomPanel('${r.id}')">
+      <span class="rnum">${r.number}</span>
+      <span class="rtype">${r.purpose?.split(' ').slice(0,2).join(' ')||'—'}</span>
+      ${r.capacity ? `<span class="rcap">${r.capacity}</span>` : ''}
+    </div>
+  `).join('');
+}
+
+function toggleEditMode() {
+  editMode = !editMode;
+  const btn = document.getElementById('btnEditMode');
+  const svg = document.getElementById('schemaSvg');
+  
+  if (editMode) {
+    btn.textContent = '✓ Выйти из режима';
+    btn.classList.remove('bt');
+    btn.classList.add('bd');
+    if (svg) svg.style.cursor = 'crosshair';
+    toast('Режим удаления: кликните на область для удаления', 'info');
+    
+    // Подсвечиваем все области для удаления
+    document.querySelectorAll('.room-area').forEach(area => {
+      area.style.fill = 'rgba(229, 57, 53, 0.3)';
+      area.style.stroke = '#E53935';
+      area.style.strokeWidth = '2';
+      area.style.cursor = 'pointer';
+    });
+  } else {
+    btn.textContent = '✏️ Удалить область';
+    btn.classList.add('bt');
+    btn.classList.remove('bd');
+    if (svg) svg.style.cursor = '';
+    
+    // Возвращаем обычный вид
+    document.querySelectorAll('.room-area').forEach(area => {
+      area.style.fill = 'rgba(21, 101, 192, 0.18)';
+      area.style.stroke = '#1565C0';
+      area.style.strokeWidth = '1.5';
+    });
+  }
+}
+</script>
+</body>
+</html>

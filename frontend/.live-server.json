@@ -1,0 +1,13 @@
+{
+  "port": 3001,
+  "proxy": [
+    {
+      "source": "/uploads",
+      "target": "http://localhost:3000/uploads"
+    },
+    {
+      "source": "/api",
+      "target": "http://localhost:3000/api"
+    }
+  ]
+}
