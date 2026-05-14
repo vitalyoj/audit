@@ -19,7 +19,7 @@ async function bootstrap() {
 
   // CORS для фронтенда
   app.enableCors({
-    origin: ['https://frontend-qyhl.onrender.com/'], // адреса фронтенда
+    origin: ['https://frontend-qyhl.onrender.com'], // адреса фронтенда
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
