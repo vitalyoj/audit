@@ -25,7 +25,7 @@ async function login() {
     const email = document.getElementById('loginEmail').value;
     const password = document.getElementById('loginPassword').value;
     
-    const response = await fetch('http://localhost:3000/api/auth/login', {
+    const response = await fetch('https://room-management-backend-8xfd.onrender.com/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
@@ -48,7 +48,7 @@ function clearToken() {
 }
 
 async function getProfile() {
-    const response = await fetch('http://localhost:3000/api/auth/profile', {
+    const response = await fetch('https://room-management-backend-8xfd.onrender.com/api/auth/profile', {
         headers: getHeaders()
     });
     const data = await response.json();
@@ -58,7 +58,7 @@ async function getProfile() {
 // ==================== ЗДАНИЯ ====================
 
 async function getBuildings() {
-    const response = await fetch('http://localhost:3000/api/buildings', {
+    const response = await fetch('https://room-management-backend-8xfd.onrender.com/api/buildings', {
         headers: getHeaders()
     });
     const data = await response.json();
@@ -69,7 +69,7 @@ async function createBuilding() {
     const name = document.getElementById('buildingName').value;
     const floorsCount = parseInt(document.getElementById('buildingFloors').value);
     
-    const response = await fetch('http://localhost:3000/api/buildings', {
+    const response = await fetch('https://room-management-backend-8xfd.onrender.com/api/buildings', {
         method: 'POST',
         headers: getHeaders(),
         body: JSON.stringify({ name, floorsCount })
@@ -84,7 +84,7 @@ async function updateBuilding() {
     const name = document.getElementById('editBuildingName').value;
     if (!id) { alert('Введите ID здания'); return; }
     
-    const response = await fetch(`http://localhost:3000/api/buildings/${id}`, {
+    const response = await fetch(`https://room-management-backend-8xfd.onrender.com/api/buildings/${id}`, {
         method: 'PATCH',
         headers: getHeaders(),
         body: JSON.stringify({ name })
@@ -99,7 +99,7 @@ async function deleteBuilding() {
     if (!id) { alert('Введите ID здания'); return; }
     if (!confirm('Удалить здание со всеми этажами и аудиториями?')) return;
     
-    const response = await fetch(`http://localhost:3000/api/buildings/${id}`, {
+    const response = await fetch(`https://room-management-backend-8xfd.onrender.com/api/buildings/${id}`, {
         method: 'DELETE',
         headers: getHeaders()
     });
@@ -109,7 +109,7 @@ async function deleteBuilding() {
 }
 
 async function getBuildingStats() {
-    const response = await fetch('http://localhost:3000/api/rooms/statistics', {
+    const response = await fetch('https://room-management-backend-8xfd.onrender.com/api/rooms/statistics', {
         headers: getHeaders()
     });
     const data = await response.json();
@@ -122,7 +122,7 @@ async function getFloorsByBuilding() {
     const buildingId = document.getElementById('floorBuildingId').value;
     if (!buildingId) { alert('Введите ID здания'); return; }
     
-    const response = await fetch(`http://localhost:3000/api/floors/building/${buildingId}`, {
+    const response = await fetch(`https://room-management-backend-8xfd.onrender.com/api/floors/building/${buildingId}`, {
         headers: getHeaders()
     });
     const data = await response.json();
@@ -133,7 +133,7 @@ async function getFloorNumbers() {
     const buildingId = document.getElementById('floorBuildingId').value;
     if (!buildingId) { alert('Введите ID здания'); return; }
     
-    const response = await fetch(`http://localhost:3000/api/floors/building/${buildingId}/numbers`, {
+    const response = await fetch(`https://room-management-backend-8xfd.onrender.com/api/floors/building/${buildingId}/numbers`, {
         headers: getHeaders()
     });
     const data = await response.json();
@@ -144,7 +144,7 @@ async function getFloorById() {
     const id = document.getElementById('floorId').value;
     if (!id) { alert('Введите ID этажа'); return; }
     
-    const response = await fetch(`http://localhost:3000/api/floors/${id}`, {
+    const response = await fetch(`https://room-management-backend-8xfd.onrender.com/api/floors/${id}`, {
         headers: getHeaders()
     });
     const data = await response.json();
@@ -156,7 +156,7 @@ async function updateFloor() {
     const name = document.getElementById('floorName').value;
     if (!id) { alert('Введите ID этажа'); return; }
     
-    const response = await fetch(`http://localhost:3000/api/floors/${id}`, {
+    const response = await fetch(`https://room-management-backend-8xfd.onrender.com/api/floors/${id}`, {
         method: 'PATCH',
         headers: getHeaders(),
         body: JSON.stringify({ name })
@@ -176,7 +176,7 @@ async function uploadSchema() {
     const formData = new FormData();
     formData.append('file', file);
     
-    const response = await fetch(`http://localhost:3000/api/floor-schemas/upload/${floorId}`, {
+    const response = await fetch(`https://room-management-backend-8xfd.onrender.com/api/floor-schemas/upload/${floorId}`, {
         method: 'POST',
         headers: authToken ? { 'Authorization': `Bearer ${authToken}` } : {},
         body: formData
@@ -189,7 +189,7 @@ async function getSchema() {
     const floorId = document.getElementById('schemaFloorId').value;
     if (!floorId) { alert('Введите ID этажа'); return; }
     
-    const response = await fetch(`http://localhost:3000/api/floor-schemas/floor/${floorId}`, {
+    const response = await fetch(`https://room-management-backend-8xfd.onrender.com/api/floor-schemas/floor/${floorId}`, {
         headers: getHeaders()
     });
     const data = await response.json();
@@ -201,7 +201,7 @@ async function deleteSchema() {
     if (!floorId) { alert('Введите ID этажа'); return; }
     if (!confirm('Удалить схему этажа?')) return;
     
-    const response = await fetch(`http://localhost:3000/api/floor-schemas/floor/${floorId}`, {
+    const response = await fetch(`https://room-management-backend-8xfd.onrender.com/api/floor-schemas/floor/${floorId}`, {
         method: 'DELETE',
         headers: getHeaders()
     });
@@ -212,7 +212,7 @@ async function deleteSchema() {
 // ==================== АУДИТОРИИ ====================
 
 async function getRooms() {
-    const response = await fetch('http://localhost:3000/api/rooms', {
+    const response = await fetch('https://room-management-backend-8xfd.onrender.com/api/rooms', {
         headers: getHeaders()
     });
     const data = await response.json();
@@ -220,7 +220,7 @@ async function getRooms() {
 }
 
 async function getRoomsFiltered() {
-    const response = await fetch('http://localhost:3000/api/rooms?floor=3&capacityFrom=30', {
+    const response = await fetch('https://room-management-backend-8xfd.onrender.com/api/rooms?floor=3&capacityFrom=30', {
         headers: getHeaders()
     });
     const data = await response.json();
@@ -228,7 +228,7 @@ async function getRoomsFiltered() {
 }
 
 async function getRoomPurposes() {
-    const response = await fetch('http://localhost:3000/api/rooms/purposes', {
+    const response = await fetch('https://room-management-backend-8xfd.onrender.com/api/rooms/purposes', {
         headers: getHeaders()
     });
     const data = await response.json();
@@ -236,7 +236,7 @@ async function getRoomPurposes() {
 }
 
 async function getRoomStats() {
-    const response = await fetch('http://localhost:3000/api/rooms/statistics', {
+    const response = await fetch('https://room-management-backend-8xfd.onrender.com/api/rooms/statistics', {
         headers: getHeaders()
     });
     const data = await response.json();
@@ -256,7 +256,7 @@ async function createRoom() {
         return;
     }
     
-    const response = await fetch('http://localhost:3000/api/rooms', {
+    const response = await fetch('https://room-management-backend-8xfd.onrender.com/api/rooms', {
         method: 'POST',
         headers: getHeaders(),
         body: JSON.stringify({ 
@@ -283,7 +283,7 @@ async function getRoomById() {
         return;
     }
     
-    const response = await fetch(`http://localhost:3000/api/rooms/${id}`, {
+    const response = await fetch(`https://room-management-backend-8xfd.onrender.com/api/rooms/${id}`, {
         headers: getHeaders()
     });
     const data = await response.json();
@@ -297,7 +297,7 @@ async function getRoomByNumber() {
         return;
     }
     
-    const response = await fetch(`http://localhost:3000/api/rooms/number/${number}`, {
+    const response = await fetch(`https://room-management-backend-8xfd.onrender.com/api/rooms/number/${number}`, {
         headers: getHeaders()
     });
     const data = await response.json();
@@ -312,7 +312,7 @@ async function deleteRoom() {
     }
     if (!confirm('Удалить аудиторию?')) return;
     
-    const response = await fetch(`http://localhost:3000/api/rooms/${id}`, {
+    const response = await fetch(`https://room-management-backend-8xfd.onrender.com/api/rooms/${id}`, {
         method: 'DELETE',
         headers: getHeaders()
     });
@@ -336,7 +336,7 @@ async function loadRoomForEdit() {
         return;
     }
     
-    const response = await fetch(`http://localhost:3000/api/rooms/${id}`, {
+    const response = await fetch(`https://room-management-backend-8xfd.onrender.com/api/rooms/${id}`, {
         headers: getHeaders()
     });
     
@@ -455,7 +455,7 @@ async function loadEditMedia(roomId) {
     container.innerHTML = '<span>Загрузка...</span>';
     
     try {
-        const response = await fetch(`http://localhost:3000/api/room-media/room/${roomId}`, {
+        const response = await fetch(`https://room-management-backend-8xfd.onrender.com/api/room-media/room/${roomId}`, {
             headers: getHeaders()
         });
         const media = await response.json();
@@ -474,7 +474,7 @@ async function loadEditMedia(roomId) {
             div.style.border = '1px solid #ccc';
             div.style.borderRadius = '4px';
             div.style.overflow = 'hidden';
-            const BACKEND_URL = 'http://localhost:3000';
+            const BACKEND_URL = 'https://room-management-backend-8xfd.onrender.com';
             div.innerHTML = `
                 <img src="${BACKEND_URL}${m.url}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='https://via.placeholder.com/100?text=No+image'">
                 <button onclick="deleteEditMedia('${m.id}')" style="position: absolute; top: 2px; right: 2px; background: red; color: white; border: none; border-radius: 50%; width: 20px; height: 20px; cursor: pointer; font-size: 12px;">×</button>
@@ -505,8 +505,8 @@ async function uploadEditMedia() {
     formData.append('file', file);
     
     const endpoint = mediaType === 'photo' 
-        ? `http://localhost:3000/api/room-media/upload/photo/${roomId}`
-        : `http://localhost:3000/api/room-media/upload/panorama/${roomId}`;
+        ? `https://room-management-backend-8xfd.onrender.com/api/room-media/upload/photo/${roomId}`
+        : `https://room-management-backend-8xfd.onrender.com/api/room-media/upload/panorama/${roomId}`;
     
     const response = await fetch(endpoint, {
         method: 'POST',
@@ -527,7 +527,7 @@ async function uploadEditMedia() {
 async function deleteEditMedia(mediaId) {
     if (!confirm('Удалить файл?')) return;
     
-    const response = await fetch(`http://localhost:3000/api/room-media/${mediaId}`, {
+    const response = await fetch(`https://room-management-backend-8xfd.onrender.com/api/room-media/${mediaId}`, {
         method: 'DELETE',
         headers: getHeaders()
     });
@@ -562,7 +562,7 @@ async function saveRoomEdit() {
         features: currentFeatures
     };
     
-    const response = await fetch(`http://localhost:3000/api/rooms/${id}`, {
+    const response = await fetch(`https://room-management-backend-8xfd.onrender.com/api/rooms/${id}`, {
         method: 'PATCH',
         headers: getHeaders(),
         body: JSON.stringify(updateData)
@@ -596,7 +596,7 @@ async function advancedSearch() {
     const capacityTo = document.getElementById('filterCapacityTo').value;
     const features = document.getElementById('filterFeatures').value;
     
-    let url = 'http://localhost:3000/api/rooms?';
+    let url = 'https://room-management-backend-8xfd.onrender.com/api/rooms?';
     const params = [];
     if (search) params.push(`search=${encodeURIComponent(search)}`);
     if (floorId) params.push(`floorId=${floorId}`);
@@ -630,7 +630,7 @@ async function getRoomById() {
         return;
     }
     
-    const response = await fetch(`http://localhost:3000/api/rooms/${id}`, {
+    const response = await fetch(`https://room-management-backend-8xfd.onrender.com/api/rooms/${id}`, {
         headers: getHeaders()
     });
     const data = await response.json();
@@ -640,7 +640,7 @@ async function getFeaturesByRoom() {
     const roomId = document.getElementById('featureRoomId').value;
     if (!roomId) { alert('Введите ID аудитории'); return; }
     
-    const response = await fetch(`http://localhost:3000/api/room-features/room/${roomId}`, {
+    const response = await fetch(`https://room-management-backend-8xfd.onrender.com/api/room-features/room/${roomId}`, {
         headers: getHeaders()
     });
     const data = await response.json();
@@ -654,7 +654,7 @@ async function createFeature() {
     const quantity = parseInt(document.getElementById('featureQuantity').value);
     const technicalSpecs = document.getElementById('featureSpecs').value;
     
-    const response = await fetch('http://localhost:3000/api/room-features', {
+    const response = await fetch('https://room-management-backend-8xfd.onrender.com/api/room-features', {
         method: 'POST',
         headers: getHeaders(),
         body: JSON.stringify({ roomId, featureName, featureValue, quantity, technicalSpecs })
@@ -668,7 +668,7 @@ async function deleteFeature() {
     const id = document.getElementById('featureId').value;
     if (!id) { alert('Введите ID оснащения'); return; }
     
-    const response = await fetch(`http://localhost:3000/api/room-features/${id}`, {
+    const response = await fetch(`https://room-management-backend-8xfd.onrender.com/api/room-features/${id}`, {
         method: 'DELETE',
         headers: getHeaders()
     });
@@ -690,8 +690,8 @@ async function uploadMedia() {
     formData.append('file', file);
     
     const endpoint = mediaType === 'photo' 
-        ? `http://localhost:3000/api/room-media/upload/photo/${roomId}`
-        : `http://localhost:3000/api/room-media/upload/panorama/${roomId}`;
+        ? `https://room-management-backend-8xfd.onrender.com/api/room-media/upload/photo/${roomId}`
+        : `https://room-management-backend-8xfd.onrender.com/api/room-media/upload/panorama/${roomId}`;
     
     const response = await fetch(endpoint, {
         method: 'POST',
@@ -706,7 +706,7 @@ async function getMediaByRoom() {
     const roomId = document.getElementById('mediaRoomId').value;
     if (!roomId) { alert('Введите ID аудитории'); return; }
     
-    const response = await fetch(`http://localhost:3000/api/room-media/room/${roomId}`, {
+    const response = await fetch(`https://room-management-backend-8xfd.onrender.com/api/room-media/room/${roomId}`, {
         headers: getHeaders()
     });
     const data = await response.json();
@@ -717,7 +717,7 @@ async function getPanorama() {
     const roomId = document.getElementById('mediaRoomId').value;
     if (!roomId) { alert('Введите ID аудитории'); return; }
     
-    const response = await fetch(`http://localhost:3000/api/room-media/room/${roomId}/panorama`, {
+    const response = await fetch(`https://room-management-backend-8xfd.onrender.com/api/room-media/room/${roomId}/panorama`, {
         headers: getHeaders()
     });
     const data = await response.json();
@@ -728,7 +728,7 @@ async function getPhotos() {
     const roomId = document.getElementById('mediaRoomId').value;
     if (!roomId) { alert('Введите ID аудитории'); return; }
     
-    const response = await fetch(`http://localhost:3000/api/room-media/room/${roomId}/photos`, {
+    const response = await fetch(`https://room-management-backend-8xfd.onrender.com/api/room-media/room/${roomId}/photos`, {
         headers: getHeaders()
     });
     const data = await response.json();
@@ -739,7 +739,7 @@ async function deleteMedia() {
     const id = document.getElementById('mediaId').value;
     if (!id) { alert('Введите ID медиа'); return; }
     
-    const response = await fetch(`http://localhost:3000/api/room-media/${id}`, {
+    const response = await fetch(`https://room-management-backend-8xfd.onrender.com/api/room-media/${id}`, {
         method: 'DELETE',
         headers: getHeaders()
     });
@@ -755,7 +755,7 @@ async function getAllTickets() {
     const buildingId = document.getElementById('filterBuildingId')?.value || '';
     const statuses = document.getElementById('filterStatuses')?.value || '';
     
-    let url = 'http://localhost:3000/api/tickets';
+    let url = 'https://room-management-backend-8xfd.onrender.com/api/tickets';
     const params = [];
     if (buildingId) params.push(`buildingId=${buildingId}`);
     if (statuses) params.push(`statuses=${statuses}`);
@@ -772,7 +772,7 @@ async function getAllTickets() {
  * Получить мои заявки (назначенные на текущего пользователя)
  */
 async function getMyTickets() {
-    const response = await fetch('http://localhost:3000/api/tickets/my', {
+    const response = await fetch('https://room-management-backend-8xfd.onrender.com/api/tickets/my', {
         headers: getHeaders()
     });
     const data = await response.json();
@@ -789,7 +789,7 @@ async function getTicketsByRoom() {
         return;
     }
     
-    const response = await fetch(`http://localhost:3000/api/tickets/room/${roomId}`, {
+    const response = await fetch(`https://room-management-backend-8xfd.onrender.com/api/tickets/room/${roomId}`, {
         headers: getHeaders()
     });
     const data = await response.json();
@@ -800,7 +800,7 @@ async function getTicketsByRoom() {
  * Получить список аудиторий с активными заявками (для индикатора на плане)
  */
 async function getRoomsWithActiveTickets() {
-    const response = await fetch('http://localhost:3000/api/tickets/rooms-with-active', {
+    const response = await fetch('https://room-management-backend-8xfd.onrender.com/api/tickets/rooms-with-active', {
         headers: getHeaders()
     });
     const data = await response.json();
@@ -820,7 +820,7 @@ async function createTicketExternal() {
         return;
     }
     
-    const response = await fetch('http://localhost:3000/api/tickets/external', {
+    const response = await fetch('https://room-management-backend-8xfd.onrender.com/api/tickets/external', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ roomNumber, description, reporterEmail })
@@ -845,7 +845,7 @@ async function getTicketById() {
         return;
     }
     
-    const response = await fetch(`http://localhost:3000/api/tickets/${id}`, {
+    const response = await fetch(`https://room-management-backend-8xfd.onrender.com/api/tickets/${id}`, {
         headers: getHeaders()
     });
     const data = await response.json();
@@ -863,7 +863,7 @@ async function assignTicket() {
         return;
     }
     
-    const response = await fetch(`http://localhost:3000/api/tickets/${id}/assign`, {
+    const response = await fetch(`https://room-management-backend-8xfd.onrender.com/api/tickets/${id}/assign`, {
         method: 'PATCH',
         headers: getHeaders(),
         body: JSON.stringify({ userId })
@@ -886,7 +886,7 @@ async function takeTicket() {
         return;
     }
     
-    const response = await fetch(`http://localhost:3000/api/tickets/${id}/take`, {
+    const response = await fetch(`https://room-management-backend-8xfd.onrender.com/api/tickets/${id}/take`, {
         method: 'PATCH',
         headers: getHeaders()
     });
@@ -908,7 +908,7 @@ async function closeTicket() {
         return;
     }
     
-    const response = await fetch(`http://localhost:3000/api/tickets/${id}/close`, {
+    const response = await fetch(`https://room-management-backend-8xfd.onrender.com/api/tickets/${id}/close`, {
         method: 'PATCH',
         headers: getHeaders()
     });
@@ -931,7 +931,7 @@ async function updateTicketStatus() {
         return;
     }
     
-    const response = await fetch(`http://localhost:3000/api/tickets/${id}/status`, {
+    const response = await fetch(`https://room-management-backend-8xfd.onrender.com/api/tickets/${id}/status`, {
         method: 'PATCH',
         headers: getHeaders(),
         body: JSON.stringify({ status })
@@ -945,7 +945,7 @@ async function updateTicketStatus() {
  */
 async function getTicketStats() {
     const buildingId = document.getElementById('statsBuildingId')?.value || '';
-    let url = 'http://localhost:3000/api/tickets/statistics';
+    let url = 'https://room-management-backend-8xfd.onrender.com/api/tickets/statistics';
     if (buildingId) url += `?buildingId=${buildingId}`;
     
     const response = await fetch(url, {
@@ -959,7 +959,7 @@ async function getTicketStats() {
  * Ручной запуск опроса Яндекс Форм (только суперадмин)
  */
 async function manualPoll() {
-    const response = await fetch('http://localhost:3000/api/tickets/poll-manual', {
+    const response = await fetch('https://room-management-backend-8xfd.onrender.com/api/tickets/poll-manual', {
         method: 'POST',
         headers: getHeaders()
     });
@@ -972,7 +972,7 @@ async function manualPoll() {
  * Сброс счетчика последней проверки (только суперадмин)
  */
 async function resetPollCounter() {
-    const response = await fetch('http://localhost:3000/api/tickets/poll-reset', {
+    const response = await fetch('https://room-management-backend-8xfd.onrender.com/api/tickets/poll-reset', {
         method: 'POST',
         headers: getHeaders()
     });
@@ -985,7 +985,7 @@ async function resetPollCounter() {
  * Получить статус последней проверки
  */
 async function getPollStatus() {
-    const response = await fetch('http://localhost:3000/api/tickets/poll-status', {
+    const response = await fetch('https://room-management-backend-8xfd.onrender.com/api/tickets/poll-status', {
         headers: getHeaders()
     });
     const data = await response.json();
@@ -996,7 +996,7 @@ async function getPollStatus() {
  * Тест подключения к API Яндекс Форм
  */
 async function testYandexApi() {
-    const response = await fetch('http://localhost:3000/api/tickets/test-yandex-api', {
+    const response = await fetch('https://room-management-backend-8xfd.onrender.com/api/tickets/test-yandex-api', {
         method: 'POST',
         headers: getHeaders()
     });
@@ -1013,7 +1013,7 @@ async function testYandexApi() {
 // ==================== ПОЛЬЗОВАТЕЛИ ====================
 
 async function getAllUsers() {
-    const response = await fetch('http://localhost:3000/api/users', {
+    const response = await fetch('https://room-management-backend-8xfd.onrender.com/api/users', {
         headers: getHeaders()
     });
     const data = await response.json();
@@ -1022,7 +1022,7 @@ async function getAllUsers() {
 
 async function searchLdap() {
     const query = document.getElementById('ldapSearchQuery').value;
-    const response = await fetch(`http://localhost:3000/api/users/ldap/search?q=${encodeURIComponent(query)}`, {
+    const response = await fetch(`https://room-management-backend-8xfd.onrender.com/api/users/ldap/search?q=${encodeURIComponent(query)}`, {
         headers: getHeaders()
     });
     const data = await response.json();
@@ -1034,7 +1034,7 @@ async function addUser() {
     const fullName = document.getElementById('newUserFullName').value;
     const role = document.getElementById('newUserRole').value;
     
-    const response = await fetch('http://localhost:3000/api/users', {
+    const response = await fetch('https://room-management-backend-8xfd.onrender.com/api/users', {
         method: 'POST',
         headers: getHeaders(),
         body: JSON.stringify({ email, fullName, role })
@@ -1049,7 +1049,7 @@ async function updateUserRole() {
     const role = document.getElementById('updateRole').value;
     if (!id) { alert('Введите ID пользователя'); return; }
     
-    const response = await fetch(`http://localhost:3000/api/users/${id}/role`, {
+    const response = await fetch(`https://room-management-backend-8xfd.onrender.com/api/users/${id}/role`, {
         method: 'PATCH',
         headers: getHeaders(),
         body: JSON.stringify({ role })
@@ -1063,7 +1063,7 @@ async function deleteUser() {
     if (!id) { alert('Введите ID пользователя'); return; }
     if (!confirm('Удалить пользователя?')) return;
     
-    const response = await fetch(`http://localhost:3000/api/users/${id}`, {
+    const response = await fetch(`https://room-management-backend-8xfd.onrender.com/api/users/${id}`, {
         method: 'DELETE',
         headers: getHeaders()
     });
@@ -1075,7 +1075,7 @@ async function deleteUser() {
 // ==================== ЛОГИ ====================
 
 async function getAllLogs() {
-    const response = await fetch('http://localhost:3000/api/logs', {
+    const response = await fetch('https://room-management-backend-8xfd.onrender.com/api/logs', {
         headers: getHeaders()
     });
     const data = await response.json();
@@ -1086,7 +1086,7 @@ async function getLogsByUser() {
     const userId = document.getElementById('logUserId').value;
     if (!userId) { alert('Введите ID пользователя'); return; }
     
-    const response = await fetch(`http://localhost:3000/api/logs/user/${userId}`, {
+    const response = await fetch(`https://room-management-backend-8xfd.onrender.com/api/logs/user/${userId}`, {
         headers: getHeaders()
     });
     const data = await response.json();
@@ -1098,7 +1098,7 @@ async function getLogsByTarget() {
     const targetType = document.getElementById('logTargetType').value;
     if (!targetId || !targetType) { alert('Введите ID и тип объекта'); return; }
     
-    const response = await fetch(`http://localhost:3000/api/logs/target/${targetId}/${targetType}`, {
+    const response = await fetch(`https://room-management-backend-8xfd.onrender.com/api/logs/target/${targetId}/${targetType}`, {
         headers: getHeaders()
     });
     const data = await response.json();
