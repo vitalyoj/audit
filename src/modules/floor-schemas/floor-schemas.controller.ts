@@ -34,7 +34,7 @@ export class FloorSchemasController {
     @UploadedFile() file: Express.Multer.File,
     @CurrentUser() user,
   ) {
-    // Получаем размеры изображения (можно использовать sharp для реального получения)
+    // Получаем размеры изображения
     const width = 1024;
     const height = 768;
     

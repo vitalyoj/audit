@@ -1,7 +1,7 @@
 // Глобальная переменная для токена
 let authToken = null;
 
-// ==================== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ====================
+// ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ 
 
 function getHeaders() {
     return authToken ? {
@@ -19,7 +19,7 @@ function showTab(tabId) {
     event.target.classList.add('active');
 }
 
-// ==================== АУТЕНТИФИКАЦИЯ ====================
+// АУТЕНТИФИКАЦИЯ 
 
 async function login() {
     const email = document.getElementById('loginEmail').value;
@@ -55,7 +55,7 @@ async function getProfile() {
     alert(JSON.stringify(data, null, 2));
 }
 
-// ==================== ЗДАНИЯ ====================
+// ЗДАНИЯ 
 
 async function getBuildings() {
     const response = await fetch('https://room-management-backend-8xfd.onrender.com/api/buildings', {
@@ -116,7 +116,7 @@ async function getBuildingStats() {
     document.getElementById('buildingsResult').innerHTML = JSON.stringify(data, null, 2);
 }
 
-// ==================== ЭТАЖИ ====================
+// ЭТАЖИ 
 
 async function getFloorsByBuilding() {
     const buildingId = document.getElementById('floorBuildingId').value;
@@ -165,7 +165,7 @@ async function updateFloor() {
     document.getElementById('floorsResult').innerHTML = JSON.stringify(data, null, 2);
 }
 
-// ==================== СХЕМЫ ЭТАЖЕЙ ====================
+// СХЕМЫ ЭТАЖЕЙ 
 
 async function uploadSchema() {
     const floorId = document.getElementById('schemaFloorId').value;
@@ -209,7 +209,7 @@ async function deleteSchema() {
     document.getElementById('floorsResult').innerHTML = JSON.stringify(data, null, 2);
 }
 
-// ==================== АУДИТОРИИ ====================
+// АУДИТОРИИ 
 
 async function getRooms() {
     const response = await fetch('https://room-management-backend-8xfd.onrender.com/api/rooms', {
@@ -324,7 +324,7 @@ async function deleteRoom() {
     }
 }
 
-// ==================== ПОЛНОЕ РЕДАКТИРОВАНИЕ ====================
+// ПОЛНОЕ РЕДАКТИРОВАНИЕ 
 
 let currentEditRoomId = null;
 let currentFeatures = [];
@@ -586,7 +586,7 @@ function closeEditForm() {
     document.getElementById('editMediaPreview').innerHTML = '';
 }
 
-// ==================== РАСШИРЕННЫЙ ПОИСК ====================
+// РАСШИРЕННЫЙ ПОИСК 
 
 async function advancedSearch() {
     const search = document.getElementById('searchQuery').value;
@@ -621,7 +621,7 @@ function clearFilters() {
     document.getElementById('filterFeatures').value = '';
     getRooms();
 }
-// ==================== ОСНАЩЕНИЕ ====================
+// ОСНАЩЕНИЕ 
 
 async function getRoomById() {
     const id = document.getElementById('roomSearchId').value;
@@ -677,7 +677,7 @@ async function deleteFeature() {
     if (response.ok) getFeaturesByRoom();
 }
 
-// ==================== МЕДИА ====================
+// МЕДИА 
 
 async function uploadMedia() {
     const roomId = document.getElementById('mediaRoomId').value;
@@ -747,7 +747,7 @@ async function deleteMedia() {
     document.getElementById('mediaResult').innerHTML = JSON.stringify(data, null, 2);
 }
 
-// ==================== ЗАЯВКИ ====================
+// ЗАЯВКИ 
 /**
  * Получить все заявки с фильтрацией
  */
@@ -769,7 +769,7 @@ async function getAllTickets() {
 }
 
 /**
- * Получить мои заявки (назначенные на текущего пользователя)
+ * Получить мои заявки
  */
 async function getMyTickets() {
     const response = await fetch('https://room-management-backend-8xfd.onrender.com/api/tickets/my', {
@@ -780,7 +780,7 @@ async function getMyTickets() {
 }
 
 /**
- * Получить заявки по аудитории (с разделением на активные и архив)
+ * Получить заявки по аудитории
  */
 async function getTicketsByRoom() {
     const roomId = document.getElementById('ticketsRoomId').value;
@@ -797,7 +797,7 @@ async function getTicketsByRoom() {
 }
 
 /**
- * Получить список аудиторий с активными заявками (для индикатора на плане)
+ * Получить список аудиторий с активными заявками
  */
 async function getRoomsWithActiveTickets() {
     const response = await fetch('https://room-management-backend-8xfd.onrender.com/api/tickets/rooms-with-active', {
@@ -808,7 +808,7 @@ async function getRoomsWithActiveTickets() {
 }
 
 /**
- * Подача заявки из внешней формы (без авторизации)
+ * Подача заявки из внешней формы 
  */
 async function createTicketExternal() {
     const roomNumber = document.getElementById('ticketRoomNumber').value;
@@ -1010,7 +1010,7 @@ async function testYandexApi() {
     }
 }
 
-// ==================== ПОЛЬЗОВАТЕЛИ ====================
+//  ПОЛЬЗОВАТЕЛИ 
 
 async function getAllUsers() {
     const response = await fetch('https://room-management-backend-8xfd.onrender.com/api/users', {
@@ -1072,7 +1072,7 @@ async function deleteUser() {
     if (response.ok) getAllUsers();
 }
 
-// ==================== ЛОГИ ====================
+// ЛОГИ 
 
 async function getAllLogs() {
     const response = await fetch('https://room-management-backend-8xfd.onrender.com/api/logs', {

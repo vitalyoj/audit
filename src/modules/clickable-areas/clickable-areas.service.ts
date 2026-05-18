@@ -24,13 +24,12 @@ export class ClickableAreasService {
   createDto: CreateClickableAreaDto, 
   currentUserId: string
 ): Promise<ClickableArea> {
-  // ✅ ПРАВИЛЬНО: ищем схему по ID, а не по floorId
   const schema = await this.schemasService.findOne(schemaId);
   if (!schema) {
     throw new NotFoundException(`Схема этажа с ID ${schemaId} не найдена`);
   }
 
-  // Проверяем, что roomId передан
+  // Проверяем что roomId передан
   if (!createDto.roomId) {
     throw new BadRequestException('roomId обязателен');
   }

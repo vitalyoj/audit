@@ -28,7 +28,7 @@ export class RoomMedia {
   thumbnailUrl: string | null;
 
   @Column({ type: 'varchar', length: 255, nullable: true })
-  originalName: string | null; // изменено на string | null
+  originalName: string | null;
 
   @Column({ length: 50, default: 'image/jpeg' })
   mimeType: string;

@@ -29,7 +29,7 @@ export class AuthController {
   @Post('logout')
   @ApiOperation({ summary: 'Выход из системы' })
   async logout(@Request() req) {
-    // В JWT логика выхода реализуется на клиенте (удаление токена)
+    // В JWT логика выхода реализуется на клиенте
     return { message: 'Выход выполнен успешно' };
   }
 }

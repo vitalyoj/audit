@@ -10,8 +10,8 @@ import { LogsModule } from '../logs/logs.module';
 @Module({
   imports: [
     TypeOrmModule.forFeature([ClickableArea]),
-    forwardRef(() => FloorSchemasModule), // используем forwardRef
-    forwardRef(() => RoomsModule), // используем forwardRef
+    forwardRef(() => FloorSchemasModule), 
+    forwardRef(() => RoomsModule), // forwardRef
     LogsModule,
   ],
   providers: [ClickableAreasService],

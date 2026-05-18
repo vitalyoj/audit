@@ -18,13 +18,13 @@ export class RoomFeature {
   featureName: string;
 
   @Column('text', { nullable: true })
-  featureValue: string | null; // изменено на string | null
+  featureValue: string | null;
 
   @Column({ default: 1 })
   quantity: number;
 
   @Column('text', { nullable: true })
-  technicalSpecs: string | null; // изменено на string | null
+  technicalSpecs: string | null;
 
   @ManyToOne(() => Room, (room) => room.features, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'room_id' })

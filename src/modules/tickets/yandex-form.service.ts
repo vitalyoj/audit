@@ -24,7 +24,7 @@ export class YandexFormService {
   private readonly logger = new Logger(YandexFormService.name);
   private readonly apiKey: string;
   private readonly surveyId: string;
-  private readonly cloudOrgId: string;  // ← добавляем поле
+  private readonly cloudOrgId: string;
   private readonly baseUrl: string;
 
   constructor(
@@ -33,7 +33,7 @@ export class YandexFormService {
   ) {
     this.apiKey = this.configService.get<string>('YANDEX_FORM_API_KEY') || '';
     this.surveyId = this.configService.get<string>('YANDEX_FORM_ID') || '';
-    this.cloudOrgId = this.configService.get<string>('YANDEX_CLOUD_ORG_ID') || '';  // ← получаем ID организации
+    this.cloudOrgId = this.configService.get<string>('YANDEX_CLOUD_ORG_ID') || '';
     this.baseUrl = 'https://api.forms.yandex.net/v1';
     
     if (!this.apiKey || !this.surveyId) {
@@ -138,7 +138,7 @@ export class YandexFormService {
         return null;
       }
 
-      this.logger.debug(`✅ Распаршен ответ ${answer.id}: аудитория ${roomNumber}, email ${reporterEmail}`);
+      this.logger.debug(` Распаршен ответ ${answer.id}: аудитория ${roomNumber}, email ${reporterEmail}`);
 
       return {
         roomNumber,

@@ -15,7 +15,7 @@ export class LogResponseDto {
   userEmail: string;
 
   @ApiProperty()
-  action: string; // меняем тип на string
+  action: string; 
 
   @ApiProperty()
   details: any;

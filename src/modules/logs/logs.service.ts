@@ -60,7 +60,6 @@ export class LogsService {
     return queryBuilder.getMany();
   }
 
-  // Добавляем метод findByTarget
   async findByTarget(targetId: string, targetType: string): Promise<Log[]> {
     return this.logRepository
       .createQueryBuilder('log')
@@ -71,7 +70,6 @@ export class LogsService {
       .getMany();
   }
 
-  // Добавляем метод findByUser
   async findByUser(userId: string): Promise<Log[]> {
     return this.logRepository.find({
       where: { userId },
@@ -80,7 +78,6 @@ export class LogsService {
     });
   }
 
-  // Добавляем метод getByDateRange
   async getByDateRange(startDate: Date, endDate: Date): Promise<Log[]> {
     return this.logRepository.find({
       where: {

@@ -34,7 +34,7 @@ export class TicketsController {
     private readonly ticketsPollerService: TicketsPollerService,
   ) {}
 
-  // ==================== ВНЕШНИЙ ЭНДПОИНТ (без авторизации) ====================
+  // ВНЕШНИЙ ЭНДПОИНТ (без авторизации)
 
   @Post('external')
   @HttpCode(HttpStatus.CREATED)
@@ -46,7 +46,7 @@ export class TicketsController {
     return new TicketResponseDto(ticket);
   }
 
-  // ==================== ПОЛУЧЕНИЕ ДАННЫХ ====================
+  //  ПОЛУЧЕНИЕ ДАННЫХ
 
   @Get('rooms-with-active')
   @ApiOperation({ summary: 'Получить список ID аудиторий с открытыми заявками' })
@@ -110,7 +110,7 @@ export class TicketsController {
     return new TicketResponseDto(ticket);
   }
 
-  // ==================== ДЕЙСТВИЯ НАД ЗАЯВКАМИ ====================
+  //  ДЕЙСТВИЯ НАД ЗАЯВКАМИ
 
   @Patch(':id/assign')
   @UseGuards(JwtAuthGuard, RolesGuard)
@@ -173,7 +173,7 @@ export class TicketsController {
     return new TicketResponseDto(ticket);
   }
 
-  // ==================== УПРАВЛЕНИЕ ОПРОСОМ (только суперадмин) ====================
+  //  УПРАВЛЕНИЕ ОПРОСОМ (только суперадмин)
 
   @Post('poll-manual')
   @UseGuards(JwtAuthGuard, RolesGuard)
@@ -236,7 +236,7 @@ export class TicketsController {
     return this.ticketsPollerService.getRawAnswers(limitNum);
   }
 
-  // ==================== АДМИНИСТРИРОВАНИЕ ====================
+  //  АДМИНИСТРИРОВАНИЕ
 
   @Delete(':id')
   @UseGuards(JwtAuthGuard, RolesGuard)

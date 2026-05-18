@@ -16,6 +16,6 @@ import { RoomMedia } from './entities/room-media.entity';
   ],
   controllers: [RoomsController],
   providers: [RoomsService],
-  exports: [RoomsService, TypeOrmModule], // Экспортируем на случай использования в других модулях
+  exports: [RoomsService, TypeOrmModule],
 })
 export class RoomsModule {}

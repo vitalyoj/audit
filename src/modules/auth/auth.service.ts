@@ -11,7 +11,7 @@ export class AuthService {
   ) {}
 
   async validateUser(email: string, password: string): Promise<User | null> {
-    // TODO: Реальная интеграция с LDAP УрФУ
+    // Будет:интеграция с LDAP УрФУ
     const isValid = await this.checkLdapCredentials(email, password);
     
     if (!isValid) {
@@ -26,7 +26,7 @@ export class AuthService {
 
     // Обновляем время последнего входа
     user.lastLoginAt = new Date();
-    await this.usersService.updateUser(user.id, user); // изменено с update на updateUser
+    await this.usersService.updateUser(user.id, user);
 
     return user;
   }

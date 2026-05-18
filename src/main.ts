@@ -52,8 +52,8 @@ async function bootstrap() {
   const port = process.env.PORT || 3000;
   await app.listen(port);
   
-  console.log(`\n🚀 Сервер запущен на порту ${port}`);
-  console.log(`📚 Документация API: http://localhost:${port}/api/docs`);
-  console.log(`📁 Загруженные файлы: http://localhost:${port}/uploads\n`);
+  console.log(`\n Сервер запущен на порту ${port}`);
+  console.log(`Документация API: http://localhost:${port}/api/docs`);
+  console.log(`Загруженные файлы: http://localhost:${port}/uploads\n`);
 }
 bootstrap();

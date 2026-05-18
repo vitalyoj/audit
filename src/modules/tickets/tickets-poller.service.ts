@@ -87,7 +87,7 @@ export class TicketsPollerService implements OnModuleInit {
             yandexAnswerId: ticketData.yandexAnswerId,
           });
           
-          this.logger.log(`✅ Создана заявка №${ticket.id} для аудитории ${room.number}`);
+          this.logger.log(`Создана заявка №${ticket.id} для аудитории ${room.number}`);
           createdCount++;
         } catch (error) {
           this.logger.error(`Ошибка создания заявки: ${error.message}`);
