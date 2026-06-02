@@ -21,7 +21,7 @@ import { UserRole } from '../users/entities/user.entity';
 
 @ApiTags('Здания')
 @Controller('api/buildings')
-@UseGuards(JwtAuthGuard, RolesGuard)
+//@UseGuards(JwtAuthGuard, RolesGuard)
 @ApiBearerAuth()
 export class BuildingsController {
   constructor(private readonly buildingsService: BuildingsService) {}

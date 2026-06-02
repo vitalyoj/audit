@@ -20,7 +20,7 @@ import { CurrentUser } from '../../common/decorators/current-user.decorator';
 
 @ApiTags('Кликабельные области')
 @Controller('api/clickable-areas')
-@UseGuards(JwtAuthGuard, RolesGuard)
+//@UseGuards(JwtAuthGuard, RolesGuard)
 @ApiBearerAuth()
 export class ClickableAreasController {
   constructor(private readonly areasService: ClickableAreasService) {}

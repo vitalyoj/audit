@@ -55,7 +55,7 @@ export class TicketsController {
   }
 
   @Get()
-  @UseGuards(JwtAuthGuard)
+  //@UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Получить список всех заявок' })
   @ApiQuery({ name: 'buildingId', required: false, description: 'ID здания' })
@@ -66,7 +66,7 @@ export class TicketsController {
   }
 
   @Get('my')
-  @UseGuards(JwtAuthGuard)
+  //@UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Получить заявки, назначенные на текущего пользователя' })
   async findMy(@Request() req) {
@@ -75,7 +75,7 @@ export class TicketsController {
   }
 
   @Get('room/:roomId')
-  @UseGuards(JwtAuthGuard)
+  //@UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Получить заявки по аудитории' })
   async findByRoom(@Param('roomId') roomId: string) {
@@ -87,7 +87,7 @@ export class TicketsController {
   }
 
   @Get('statistics')
-  @UseGuards(JwtAuthGuard)
+  //@UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Получить статистику по заявкам' })
   @ApiQuery({ name: 'buildingId', required: false, description: 'ID здания' })
@@ -96,7 +96,7 @@ export class TicketsController {
   }
 
   @Get(':id')
-  @UseGuards(JwtAuthGuard)
+  //@UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Получить заявку по ID' })
   @ApiResponse({ status: 200, description: 'Заявка найдена', type: TicketResponseDto })
@@ -113,7 +113,7 @@ export class TicketsController {
   //  ДЕЙСТВИЯ НАД ЗАЯВКАМИ
 
   @Patch(':id/assign')
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  //@UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Назначить исполнителя на заявку' })
@@ -131,7 +131,7 @@ export class TicketsController {
   }
 
   @Patch(':id/take')
-  @UseGuards(JwtAuthGuard)
+  //@UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Взять заявку в работу (для исполнителя)' })
   async takeInProgress(@Param('id') id: string, @Request() req) {
@@ -144,7 +144,7 @@ export class TicketsController {
   }
 
   @Patch(':id/close')
-  @UseGuards(JwtAuthGuard)
+  //@UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Закрыть заявку' })
   async close(@Param('id') id: string, @Request() req) {
@@ -157,7 +157,7 @@ export class TicketsController {
   }
 
   @Patch(':id/status')
-  @UseGuards(JwtAuthGuard)
+  //@UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Изменить статус заявки' })
   async updateStatus(
@@ -176,7 +176,7 @@ export class TicketsController {
   //  УПРАВЛЕНИЕ ОПРОСОМ (только суперадмин)
 
   @Post('poll-manual')
-  @UseGuards(JwtAuthGuard, RolesGuard)
+ // @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.SUPER_ADMIN)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Ручной запуск опроса Яндекс Форм (только суперадмин)' })
@@ -192,7 +192,7 @@ export class TicketsController {
   }
 
   @Post('poll-reset')
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  //@UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.SUPER_ADMIN)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Сбросить счетчик последней проверки (только суперадмин)' })
@@ -202,7 +202,7 @@ export class TicketsController {
   }
 
   @Get('poll-status')
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  //@UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Получить статус последней проверки' })
@@ -217,7 +217,7 @@ export class TicketsController {
   }
 
   @Post('test-yandex-api')
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  //@UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.SUPER_ADMIN)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Тестовый запрос к API Яндекс Форм' })
@@ -227,7 +227,7 @@ export class TicketsController {
   }
 
   @Get('debug-raw')
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  //@UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.SUPER_ADMIN)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Получить сырые ответы из Яндекс Формы (отладка)' })
@@ -239,7 +239,7 @@ export class TicketsController {
   //  АДМИНИСТРИРОВАНИЕ
 
   @Delete(':id')
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  //@UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.SUPER_ADMIN)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Удалить заявку (только для отладки)' })

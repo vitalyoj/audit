@@ -19,7 +19,7 @@ import { UserRole } from '../users/entities/user.entity';
 
 @ApiTags('Оснащение аудиторий')
 @Controller('api/room-features')
-@UseGuards(JwtAuthGuard, RolesGuard)
+//@UseGuards(JwtAuthGuard, RolesGuard)
 @ApiBearerAuth()
 export class RoomFeaturesController {
   constructor(private readonly featuresService: RoomFeaturesService) {}

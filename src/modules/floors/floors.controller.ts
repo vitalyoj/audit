@@ -9,7 +9,7 @@ import { UserRole } from '../users/entities/user.entity';
 
 @ApiTags('Этажи')
 @Controller('api/floors')
-@UseGuards(JwtAuthGuard, RolesGuard)
+//@UseGuards(JwtAuthGuard, RolesGuard)
 @ApiBearerAuth()
 export class FloorsController {
   constructor(private readonly floorsService: FloorsService) {}

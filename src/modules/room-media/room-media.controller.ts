@@ -27,7 +27,7 @@ import { MediaType } from './entities/room-media.entity';
 
 @ApiTags('Медиафайлы аудиторий')
 @Controller('api/room-media')
-@UseGuards(JwtAuthGuard, RolesGuard)
+//@UseGuards(JwtAuthGuard, RolesGuard)
 @ApiBearerAuth()
 export class RoomMediaController {
   constructor(private readonly mediaService: RoomMediaService) {}

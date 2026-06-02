@@ -10,14 +10,14 @@ import { CurrentUser } from '../../common/decorators/current-user.decorator';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @UseGuards(AuthGuard('local'))
+  //@UseGuards(AuthGuard('local'))
   @Post('login')
   @ApiOperation({ summary: 'Вход в систему' })
   async login(@Request() req) {
     return this.authService.login(req.user);
   }
 
-  @UseGuards(JwtAuthGuard)
+  //@UseGuards(JwtAuthGuard)
   @Get('profile')
   @ApiOperation({ summary: 'Получить информацию о текущем пользователе' })
   @ApiBearerAuth()
@@ -25,7 +25,7 @@ export class AuthController {
     return user;
   }
 
-  @UseGuards(JwtAuthGuard)
+  //@UseGuards(JwtAuthGuard)
   @Post('logout')
   @ApiOperation({ summary: 'Выход из системы' })
   async logout(@Request() req) {

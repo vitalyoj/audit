@@ -11,7 +11,7 @@ import { UserRole } from '../users/entities/user.entity';
 
 @ApiTags('Логи')
 @Controller('api/logs')
-@UseGuards(JwtAuthGuard, RolesGuard)
+//@UseGuards(JwtAuthGuard, RolesGuard)
 @Roles(UserRole.SUPER_ADMIN)
 @ApiBearerAuth()
 export class LogsController {

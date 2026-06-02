@@ -19,7 +19,7 @@ import { CurrentUser } from '../../common/decorators/current-user.decorator';
 
 @ApiTags('Схемы этажей')
 @Controller('api/floor-schemas')
-@UseGuards(JwtAuthGuard, RolesGuard)
+//@UseGuards(JwtAuthGuard, RolesGuard)
 @ApiBearerAuth()
 export class FloorSchemasController {
   constructor(private readonly schemasService: FloorSchemasService) {}
