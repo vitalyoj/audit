@@ -36,16 +36,16 @@ export class Room {
   number: string;
 
   @Column({ type: 'decimal', precision: 8, scale: 2, nullable: true })
-  area: number;
+  area: number | null;
 
   @Column({ type: 'int', nullable: true })
-  capacity: number;
+  capacity: number | null;
 
   @Column({ type: 'varchar', length: 50, nullable: true })
   purpose: string;
 
   @Column({ type: 'text', nullable: true })
-  description: string;
+  description: string | null;
 
   @ManyToOne(() => Floor, (floor) => floor.rooms, {
     onDelete: 'CASCADE',

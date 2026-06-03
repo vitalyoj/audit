@@ -26,13 +26,13 @@ export class RoomFeaturesController {
 
   @Post()
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
-  @ApiOperation({ summary: 'Создать оснащение' })
+  @ApiOperation({ summary: 'Добавить оснащение (мебель или технику)' })
   create(@Body() createDto: CreateRoomFeatureDto) {
     return this.featuresService.create(createDto);
   }
 
   @Get('room/:roomId')
-  @ApiOperation({ summary: 'Получить оснащение аудитории' })
+  @ApiOperation({ summary: 'Получить всё оснащение аудитории' })
   findByRoom(@Param('roomId') roomId: string) {
     return this.featuresService.findByRoom(roomId);
   }

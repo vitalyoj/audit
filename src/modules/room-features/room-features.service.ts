@@ -20,7 +20,7 @@ export class RoomFeaturesService {
   async findByRoom(roomId: string): Promise<RoomFeature[]> {
     return this.featureRepository.find({
       where: { roomId },
-      order: { featureName: 'ASC' },
+      order: { category: 'ASC', name: 'ASC' },
     });
   }
 

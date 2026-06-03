@@ -20,64 +20,60 @@ export class RoomsService {
   ) {}
 
   async create(createRoomDto: CreateRoomDto): Promise<Room> {
-    const existingRoom = await this.roomRepository.findOne({
-      where: { number: createRoomDto.number },
-    });
+  const existingRoom = await this.roomRepository.findOne({
+    where: { number: createRoomDto.number },
+  });
 
-    if (existingRoom) {
-      throw new BadRequestException(`Аудитория с номером ${createRoomDto.number} уже существует`);
-    }
-
-    const room = new Room();
-    room.number = createRoomDto.number;
-    room.floorId = createRoomDto.floorId;
-    
-    // Присваиваем только если значения определены
-    if (createRoomDto.purpose !== undefined) {
-      room.purpose = createRoomDto.purpose;
-    }
-    if (createRoomDto.area !== undefined) {
-      room.area = createRoomDto.area;
-    }
-    if (createRoomDto.capacity !== undefined) {
-      room.capacity = createRoomDto.capacity;
-    }
-    if (createRoomDto.description !== undefined) {
-      room.description = createRoomDto.description;
-    }
-
-    const savedRoom = await this.roomRepository.save(room);
-
-    // Добавляем оснащение
-    if (createRoomDto.features && createRoomDto.features.length > 0) {
-      const features = createRoomDto.features.map(feature => {
-        const newFeature = new RoomFeature();
-        newFeature.featureName = feature.featureName;
-        newFeature.featureValue = feature.featureValue || '';
-        newFeature.quantity = feature.quantity || 1;
-        newFeature.technicalSpecs = feature.technicalSpecs || '';
-        newFeature.roomId = savedRoom.id;
-        return newFeature;
-      });
-      await this.featureRepository.save(features);
-    }
-
-    // Добавляем медиа
-    if (createRoomDto.media && createRoomDto.media.length > 0) {
-      const mediaList = createRoomDto.media.map(item => {
-        const newMedia = new RoomMedia();
-        newMedia.mediaType = item.mediaType as MediaType;
-        newMedia.url = item.url;
-        newMedia.thumbnailUrl = item.thumbnailUrl || '';
-        newMedia.sortOrder = item.sortOrder || 0;
-        newMedia.roomId = savedRoom.id;
-        return newMedia;
-      });
-      await this.mediaRepository.save(mediaList);
-    }
-
-    return this.findOne(savedRoom.id);
+  if (existingRoom) {
+    throw new BadRequestException(`Аудитория с номером ${createRoomDto.number} уже существует`);
   }
+
+  const room = new Room();
+  room.number = createRoomDto.number;
+  room.floorId = createRoomDto.floorId;
+  room.purpose = createRoomDto.purpose;
+  room.area = createRoomDto.area ?? null;  // ← используем ?? null
+  room.capacity = createRoomDto.capacity ?? null;  // ← используем ?? null
+  room.description = createRoomDto.description ?? null;  // ← используем ?? null
+
+  const savedRoom = await this.roomRepository.save(room);
+
+  // Добавляем оснащение
+  if (createRoomDto.features && createRoomDto.features.length > 0) {
+    const features: RoomFeature[] = [];
+    
+    for (const feature of createRoomDto.features) {
+      const newFeature = new RoomFeature();
+      newFeature.category = feature.category || 'equipment';
+      newFeature.name = feature.name;
+      newFeature.quantity = feature.quantity || 1;
+      newFeature.properties = feature.properties || {};
+      newFeature.roomId = savedRoom.id;
+      features.push(newFeature);
+    }
+    
+    await this.featureRepository.save(features);
+  }
+
+  // Добавляем медиа
+  if (createRoomDto.media && createRoomDto.media.length > 0) {
+    const mediaList: RoomMedia[] = [];
+    
+    for (const item of createRoomDto.media) {
+      const newMedia = new RoomMedia();
+      newMedia.mediaType = item.mediaType as MediaType;
+      newMedia.url = item.url;
+      newMedia.thumbnailUrl = item.thumbnailUrl || '';
+      newMedia.sortOrder = item.sortOrder || 0;
+      newMedia.roomId = savedRoom.id;
+      mediaList.push(newMedia);
+    }
+    
+    await this.mediaRepository.save(mediaList);
+  }
+
+  return this.findOne(savedRoom.id);
+}
 
   async findAll(filter: FilterRoomDto): Promise<{ items: Room[]; total: number }> {
     const { search, floorId, purposes, capacityFrom, capacityTo, features, page, limit } = filter;
@@ -164,70 +160,74 @@ export class RoomsService {
   }
 
   async update(id: string, updateRoomDto: UpdateRoomDto): Promise<Room> {
-    const room = await this.findOne(id);
+  const room = await this.findOne(id);
 
-    if (updateRoomDto.number && updateRoomDto.number !== room.number) {
-      const existingRoom = await this.roomRepository.findOne({
-        where: { number: updateRoomDto.number },
-      });
+  if (updateRoomDto.number && updateRoomDto.number !== room.number) {
+    const existingRoom = await this.roomRepository.findOne({
+      where: { number: updateRoomDto.number },
+    });
 
-      if (existingRoom) {
-        throw new BadRequestException(
-          `Аудитория с номером ${updateRoomDto.number} уже существует`,
-        );
-      }
+    if (existingRoom) {
+      throw new BadRequestException(
+        `Аудитория с номером ${updateRoomDto.number} уже существует`,
+      );
     }
-
-    // Обновляем только переданные поля
-    if (updateRoomDto.number !== undefined) room.number = updateRoomDto.number;
-    if (updateRoomDto.floorId !== undefined) room.floorId = updateRoomDto.floorId;
-    if (updateRoomDto.purpose !== undefined) room.purpose = updateRoomDto.purpose;
-    if (updateRoomDto.area !== undefined) room.area = updateRoomDto.area;
-    if (updateRoomDto.capacity !== undefined) room.capacity = updateRoomDto.capacity;
-    if (updateRoomDto.description !== undefined) room.description = updateRoomDto.description;
-
-    await this.roomRepository.save(room);
-
-    // Обновляем оснащение
-    if (updateRoomDto.features) {
-      await this.featureRepository.delete({ roomId: id });
-      
-      const features = updateRoomDto.features.map(feature => {
-        const newFeature = new RoomFeature();
-        newFeature.featureName = feature.featureName;
-        newFeature.featureValue = feature.featureValue || '';
-        newFeature.quantity = feature.quantity || 1;
-        newFeature.technicalSpecs = feature.technicalSpecs || '';
-        newFeature.roomId = id;
-        return newFeature;
-      });
-      
-      if (features.length > 0) {
-        await this.featureRepository.save(features);
-      }
-    }
-
-    // Обновляем медиа
-    if (updateRoomDto.media) {
-      await this.mediaRepository.delete({ roomId: id });
-      
-      const mediaList = updateRoomDto.media.map(item => {
-        const newMedia = new RoomMedia();
-        newMedia.mediaType = item.mediaType as MediaType;
-        newMedia.url = item.url;
-        newMedia.thumbnailUrl = item.thumbnailUrl || '';
-        newMedia.sortOrder = item.sortOrder || 0;
-        newMedia.roomId = id;
-        return newMedia;
-      });
-      
-      if (mediaList.length > 0) {
-        await this.mediaRepository.save(mediaList);
-      }
-    }
-
-    return this.findOne(id);
   }
+
+  // Обновляем основные поля
+  if (updateRoomDto.number !== undefined) room.number = updateRoomDto.number;
+  if (updateRoomDto.floorId !== undefined) room.floorId = updateRoomDto.floorId;
+  if (updateRoomDto.purpose !== undefined) room.purpose = updateRoomDto.purpose;
+  if (updateRoomDto.area !== undefined) room.area = updateRoomDto.area;
+  if (updateRoomDto.capacity !== undefined) room.capacity = updateRoomDto.capacity;
+  if (updateRoomDto.description !== undefined) room.description = updateRoomDto.description;
+
+  await this.roomRepository.save(room);
+
+  // Обновляем оснащение
+  if (updateRoomDto.features) {
+    await this.featureRepository.delete({ roomId: id });
+    
+    const features: RoomFeature[] = [];
+    
+    for (const feature of updateRoomDto.features) {
+      const newFeature = new RoomFeature();
+      newFeature.category = feature.category || 'equipment';
+      newFeature.name = feature.name;
+      newFeature.quantity = feature.quantity || 1;
+      newFeature.properties = feature.properties || {};
+      newFeature.roomId = id;
+      features.push(newFeature);
+    }
+    
+    if (features.length > 0) {
+      await this.featureRepository.save(features);
+    }
+  }
+
+  // Обновляем медиа
+  if (updateRoomDto.media) {
+    await this.mediaRepository.delete({ roomId: id });
+    
+    const mediaList: RoomMedia[] = [];
+    
+    for (const item of updateRoomDto.media) {
+      const newMedia = new RoomMedia();
+      newMedia.mediaType = item.mediaType as MediaType;
+      newMedia.url = item.url;
+      newMedia.thumbnailUrl = item.thumbnailUrl || '';
+      newMedia.sortOrder = item.sortOrder || 0;
+      newMedia.roomId = id;
+      mediaList.push(newMedia);
+    }
+    
+    if (mediaList.length > 0) {
+      await this.mediaRepository.save(mediaList);
+    }
+  }
+
+  return this.findOne(id);
+}
 
   async remove(id: string): Promise<void> {
     const room = await this.findOne(id);

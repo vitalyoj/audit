@@ -6,39 +6,43 @@ import {
   IsOptional,
   IsArray,
   ValidateNested,
-  Min,
-  Max,
+  MinLength,
+  MaxLength,
   IsPositive,
   IsUUID,
+  IsObject,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { RoomPurpose } from '../entities/room.entity';
 
-class FeatureDto {
-  @ApiProperty()
+export class FeatureDto {
+  @ApiProperty({ enum: ['furniture', 'equipment'], example: 'equipment' })
   @IsString()
-  featureName: string;
+  category: string;
 
-  @ApiProperty({ required: false })
-  @IsOptional()
+  @ApiProperty({ example: 'Стул ученический' })
   @IsString()
-  featureValue?: string;
+  name: string;
 
-  @ApiProperty({ required: false })
-  @IsOptional()
+  @ApiProperty({ example: 30, required: false })
   @IsNumber()
+  @IsOptional()
+  @IsPositive()
   quantity?: number;
 
-  @ApiProperty({ required: false })
+  @ApiProperty({
+    example: { type: 'Стул', length: 45, width: 45, height: 85 },
+    required: false,
+  })
+  @IsObject()
   @IsOptional()
-  @IsString()
-  technicalSpecs?: string;
+  properties?: Record<string, any>;
 }
 
-class MediaDto {
+export class MediaDto {
   @ApiProperty({ enum: ['photo', 'panorama'] })
   @IsString()
-  mediaType: 'photo' | 'panorama';
+  mediaType: string;
 
   @ApiProperty()
   @IsString()
@@ -58,6 +62,8 @@ class MediaDto {
 export class CreateRoomDto {
   @ApiProperty({ example: '301' })
   @IsString()
+  @MinLength(1)
+  @MaxLength(20)
   number: string;
 
   @ApiProperty({ example: 'floor-uuid-123' })

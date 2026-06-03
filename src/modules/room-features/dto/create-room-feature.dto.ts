@@ -1,25 +1,32 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNumber, IsOptional, IsUUID } from 'class-validator';
+import { IsEnum, IsString, IsNumber, IsOptional, IsUUID, IsObject } from 'class-validator';
+
+export enum FeatureCategory {
+  FURNITURE = 'furniture',
+  EQUIPMENT = 'equipment',
+}
 
 export class CreateRoomFeatureDto {
-  @ApiProperty({ example: 'projector' })
-  @IsString()
-  featureName: string;
+  @ApiProperty({ enum: FeatureCategory, example: FeatureCategory.FURNITURE })
+  @IsEnum(FeatureCategory)
+  category: FeatureCategory;
 
-  @ApiProperty({ example: 'Epson EB-695Wi', required: false })
-  @IsOptional()
+  @ApiProperty({ example: 'Стул ученический' })
   @IsString()
-  featureValue?: string;
+  name: string;
 
-  @ApiProperty({ example: 1, required: false })
-  @IsOptional()
+  @ApiProperty({ example: 30, required: false })
   @IsNumber()
+  @IsOptional()
   quantity?: number;
 
-  @ApiProperty({ example: '4K, 3500 люмен', required: false })
+  @ApiProperty({
+    example: { type: 'Стул', length: 45, width: 45, height: 85 },
+    required: false,
+  })
+  @IsObject()
   @IsOptional()
-  @IsString()
-  technicalSpecs?: string;
+  properties?: Record<string, any>;
 
   @ApiProperty()
   @IsUUID()
