@@ -843,11 +843,13 @@ document.getElementById('loginPage').style.display = 'flex';
 document.getElementById('appShell').hidden = true;
 
 function doLogin() {
-  const email = document.getElementById('loginEmail').value;
-  const pass  = document.getElementById('loginPassword').value;
   document.getElementById('loginPage').style.display = 'none';
   document.getElementById('appShell').hidden = false;
-  loginApi(email, pass);
+  authToken = 'demo-token-for-presentation';
+  toast('Демо-режим (авторизация отключена)', 'success');
+  loadBuildings();
+  loadTickets();
+  loadRoomsForFilter();
 }
 function logout() {
   authToken = null;
